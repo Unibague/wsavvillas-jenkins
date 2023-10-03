@@ -55,6 +55,6 @@ public class PaidInvoiceDto {
     /**
      * Detalle de valores de la factura pagada
      */
-    @XmlElement(name = "ValuesDetails", required = false, namespace = "")
+    @XmlElement(name = "ValuesDetail", required = false, namespace = "")
     private List<ValueDetailDto> valuesDetails;
 }
