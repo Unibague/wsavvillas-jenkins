@@ -11,7 +11,8 @@ repositories {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}")
-    implementation 'org.apache.camel.quarkus:camel-quarkus-cxf-soap'
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-cxf-bom:${quarkusPlatformVersion}")
+    implementation 'io.quarkiverse.cxf:quarkus-cxf'
     implementation 'org.apache.camel.quarkus:camel-quarkus-xmlsecurity'
     implementation 'io.quarkus:quarkus-arc'
     compileOnly 'org.projectlombok:lombok:1.18.28'
