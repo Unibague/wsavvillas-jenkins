@@ -1,6 +1,6 @@
 package com.avvillas.domain.dto;
 
-import com.avvillas.util.LocalDateTimeAdapter;
+import com.avvillas.infrastructure.util.LocalDateTimeAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;

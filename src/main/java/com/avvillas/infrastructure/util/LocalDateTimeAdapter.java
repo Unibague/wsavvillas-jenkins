@@ -1,4 +1,4 @@
-package com.avvillas.util;
+package com.avvillas.infrastructure.util;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 

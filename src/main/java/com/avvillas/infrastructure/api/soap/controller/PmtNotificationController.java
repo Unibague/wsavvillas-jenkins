@@ -1,14 +1,14 @@
-package com.avvillas.web.controller;
+package com.avvillas.infrastructure.api.soap.controller;
 
 import com.avvillas.domain.dto.PmtNotificationRequestDto;
 import com.avvillas.domain.dto.PmtNotificationResponseDto;
-import com.avvillas.web.IPmtNotificationController;
+import com.avvillas.infrastructure.api.soap.IPmtNotificationController;
 import jakarta.jws.WebService;
 
 /**
  * Controlador para la notificacion de una factura
  */
-@WebService(endpointInterface = "com.avvillas.web.IPmtNotificationController", targetNamespace = "http://biller.com/onlinebilling")
+@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtNotificationController", targetNamespace = "http://biller.com/onlinebilling")
 public class PmtNotificationController implements IPmtNotificationController {
 
     /**

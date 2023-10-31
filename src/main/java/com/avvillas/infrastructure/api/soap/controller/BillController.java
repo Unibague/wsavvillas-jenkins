@@ -1,14 +1,14 @@
-package com.avvillas.web.controller;
+package com.avvillas.infrastructure.api.soap.controller;
 
 import com.avvillas.domain.dto.BillRequestDto;
 import com.avvillas.domain.dto.BillResponseDto;
-import com.avvillas.web.IBillController;
+import com.avvillas.infrastructure.api.soap.IBillController;
 import jakarta.jws.WebService;
 
 /**
  * Controlador para la consulta de una factura
  */
-@WebService(endpointInterface = "com.avvillas.web.IBillController", targetNamespace = "http://biller.com/onlinebilling")
+@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillController", targetNamespace = "http://biller.com/onlinebilling")
 public class BillController implements IBillController {
 
     /**

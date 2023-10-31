@@ -1,14 +1,14 @@
-package com.avvillas.web.controller;
+package com.avvillas.infrastructure.api.soap.controller;
 
 import com.avvillas.domain.dto.PmtRollbackRequestDto;
 import com.avvillas.domain.dto.PmtRollbackResponseDto;
-import com.avvillas.web.IPmtRollbackController;
+import com.avvillas.infrastructure.api.soap.IPmtRollbackController;
 import jakarta.jws.WebService;
 
 /**
  * Controlador para el reverso de una factura
  */
-@WebService(endpointInterface = "com.avvillas.web.IPmtRollbackController", targetNamespace = "http://biller.com/onlinebilling")
+@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtRollbackController", targetNamespace = "http://biller.com/onlinebilling")
 public class PmtRollbackController implements IPmtRollbackController {
 
     /**

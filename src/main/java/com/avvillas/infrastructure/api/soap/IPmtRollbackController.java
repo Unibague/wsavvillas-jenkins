@@ -1,4 +1,4 @@
-package com.avvillas.web;
+package com.avvillas.infrastructure.api.soap;
 
 import com.avvillas.domain.dto.PmtRollbackRequestDto;
 import com.avvillas.domain.dto.PmtRollbackResponseDto;
