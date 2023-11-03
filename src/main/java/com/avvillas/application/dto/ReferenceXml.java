@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -10,24 +10,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Detalles adicionales de una factura de {@link InvoiceDto}
+ * Campos de busqueda adicionales de {@link BillRequestXml}
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "AdditionalData")
+@XmlRootElement(name = "References")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AdditionalDataDto {
+public class ReferenceXml {
 
     /**
-     * Nombre del detalle adicional
+     * Nombre de la caracteristica adicional
      */
     @XmlElement(name = "Name", required = true, namespace = "")
     private String name;
 
     /**
-     * Descripción del detalle adicional
+     * Descripcion de la caracteristica adicional
      */
     @XmlElement(name = "Message", required = true, namespace = "")
     private String message;

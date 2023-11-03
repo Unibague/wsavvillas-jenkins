@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Detalles de los valores de una factura de {@link InvoiceDto} o {@link PaidInvoice}
+ * Detalles de los valores de una factura de {@link InvoiceXml} o {@link PaidInvoice}
  */
 @Getter
 @Setter
@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @XmlRootElement(name = "ValuesDetail")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ValueDetailDto {
+public class ValueDetailXml {
 
     /**
      * Descripcion del valor detallado

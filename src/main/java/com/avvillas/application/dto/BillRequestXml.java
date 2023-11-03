@@ -1,5 +1,4 @@
-package com.avvillas.domain.dto;
-
+package com.avvillas.application.dto;
 
 import com.avvillas.infrastructure.util.LocalDateTimeAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -16,21 +15,39 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Factura a reversar desde ATH hacia el convenio
+ * Consulta de una factura desde ATH hacia el convenio
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "PmtRollbackRequest")
+@XmlRootElement(name = "BillRequest")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PmtRollbackRequestDto {
+public class BillRequestXml {
 
     /**
      * Id de la solicitud
      */
     @XmlElement(name = "RequestId", required = true, namespace = "")
     private String requestId;
+
+    /**
+     * Tipo de busqueda de la factura
+     */
+    @XmlElement(name = "SearchType", required = false, namespace = "")
+    private Integer searchType;
+
+    /**
+     * Numero de factura o Numero de identificacion cuando {@link #searchType} sea 3
+     */
+    @XmlElement(name = "InvoiceId", required = true, namespace = "")
+    private String invoiceId;
+
+    /**
+     * Id del convenio
+     */
+    @XmlElement(name = "AgreementId", required = false, namespace = "")
+    private Integer agreementId;
 
     /**
      * Fecha y hora de la peticion
@@ -47,9 +64,14 @@ public class PmtRollbackRequestDto {
     private LocalDateTime inqDate;
 
     /**
-     * Lista con las facturas
+     * Periodo de consulta
      */
-    @XmlElement(name = "PaidInvoices", required = true, namespace = "")
-    private List<PaidInvoiceDto> paidInvoices;
+    @XmlElement(name = "InqPeriod", required = false, namespace = "")
+    private String inqPeriod;
 
+    /**
+     * Lista con más campos de búsqueda
+     */
+    @XmlElement(name = "References", required = false, namespace = "")
+    private List<ReferenceXml> references;
 }

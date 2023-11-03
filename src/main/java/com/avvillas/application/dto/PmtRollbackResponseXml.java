@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -9,41 +9,38 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 /**
- * Respuesta de una factura desde el convenio hacia ATH
+ * Respuesta del reverso desde el convenio hacia ATH
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "BillResponse")
+@XmlRootElement(name = "PmtRollbackResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BillResponseDto {
+public class PmtRollbackResponseXml {
 
     /**
-     * Código de aceptación
+     * Codigo de aceptacion 0,1,82,83,84
      */
     @XmlElement(name = "Status", required = true, namespace = "")
     private String status;
 
     /**
-     * Id de la solicitud (el mismo del {@link BillRequestDto} recibido)
+     * Id de la solicitud
      */
     @XmlElement(name = "RequestId", required = true, namespace = "")
     private String requestId;
 
     /**
-     * Descripcion o mensaje del {@link #status}
+     * Descripcion del {@link #status}
      */
     @XmlElement(name = "Message", required = true, namespace = "")
     private String message;
 
     /**
-     * Lista con las facturas
-     * Opcional Si {@link #status} es diferente a 0
+     * Número de autorización del convenio
      */
-    @XmlElement(name = "Invoices", required = false, namespace = "")
-    private List<InvoiceDto> invoices;
+    @XmlElement(name = "PartnerAuthCode", required = false, namespace = "")
+    private String partnerAuthCode;
 }

@@ -1,6 +1,5 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -19,27 +18,32 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class BillResponseDtoJson {
+@XmlRootElement(name = "BillResponse")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class BillResponseXml {
 
     /**
      * Código de aceptación
      */
+    @XmlElement(name = "Status", required = true, namespace = "")
     private String status;
 
     /**
-     * Id de la solicitud (el mismo del {@link BillRequestDto} recibido)
+     * Id de la solicitud (el mismo del {@link BillRequestXml} recibido)
      */
- //   private String requestId;
+    @XmlElement(name = "RequestId", required = true, namespace = "")
+    private String requestId;
 
     /**
      * Descripcion o mensaje del {@link #status}
      */
+    @XmlElement(name = "Message", required = true, namespace = "")
     private String message;
 
     /**
      * Lista con las facturas
      * Opcional Si {@link #status} es diferente a 0
      */
-    private List<InvoiceDtoJson> invoices;
+    @XmlElement(name = "Invoices", required = false, namespace = "")
+    private List<InvoiceXml> invoices;
 }

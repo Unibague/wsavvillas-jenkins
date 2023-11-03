@@ -1,7 +1,7 @@
 package com.avvillas.infrastructure.api.soap.controller;
 
-import com.avvillas.domain.dto.PmtRollbackRequestDto;
-import com.avvillas.domain.dto.PmtRollbackResponseDto;
+import com.avvillas.application.dto.PmtRollbackRequestXml;
+import com.avvillas.application.dto.PmtRollbackResponseXml;
 import com.avvillas.infrastructure.api.soap.IPmtRollbackController;
 import jakarta.jws.WebService;
 
@@ -17,7 +17,7 @@ public class PmtRollbackController implements IPmtRollbackController {
      * @return Dto con la confirmacion del reverso de la factura
      */
     @Override
-    public PmtRollbackResponseDto sendPmtRollback(PmtRollbackRequestDto pmtRollbackRequest) {
-        return new PmtRollbackResponseDto("0", pmtRollbackRequest.getRequestId(), "Reverso exitoso", "98765");
+    public PmtRollbackResponseXml sendPmtRollback(PmtRollbackRequestXml pmtRollbackRequest) {
+        return new PmtRollbackResponseXml("0", pmtRollbackRequest.getRequestId(), "Reverso exitoso", "98765");
     }
 }

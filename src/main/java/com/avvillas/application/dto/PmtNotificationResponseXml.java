@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @XmlRootElement(name = "PmtNotificationResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PmtNotificationResponseDto {
+public class PmtNotificationResponseXml {
 
     /**
      * Codigo de aceptacion 0,1,82,83,84
@@ -27,7 +27,7 @@ public class PmtNotificationResponseDto {
     private String status;
 
     /**
-     * Id de la solicitud (la misma de {@link PmtNotificationRequestDto})
+     * Id de la solicitud (la misma de {@link PmtNotificationRequestXml})
      */
     @XmlElement(name = "RequestId", required = true, namespace = "")
     private String requestId;

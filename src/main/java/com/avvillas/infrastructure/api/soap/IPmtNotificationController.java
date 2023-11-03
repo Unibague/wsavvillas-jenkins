@@ -1,7 +1,7 @@
 package com.avvillas.infrastructure.api.soap;
 
-import com.avvillas.domain.dto.PmtNotificationRequestDto;
-import com.avvillas.domain.dto.PmtNotificationResponseDto;
+import com.avvillas.application.dto.PmtNotificationRequestXml;
+import com.avvillas.application.dto.PmtNotificationResponseXml;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
@@ -18,5 +18,5 @@ public interface IPmtNotificationController {
      * @return Dto con la confirmacion de guardado de la notificacion
      */
     @WebMethod
-    public PmtNotificationResponseDto sendPmtNotification(@WebParam(name = "PmtNotificationRequest") PmtNotificationRequestDto pmtNotificationRequest);
+    public PmtNotificationResponseXml sendPmtNotification(@WebParam(name = "PmtNotificationRequest") PmtNotificationRequestXml pmtNotificationRequest);
 }

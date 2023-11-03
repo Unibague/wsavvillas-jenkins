@@ -1,7 +1,7 @@
 package com.avvillas.infrastructure.api.soap.controller;
 
-import com.avvillas.domain.dto.PmtNotificationRequestDto;
-import com.avvillas.domain.dto.PmtNotificationResponseDto;
+import com.avvillas.application.dto.PmtNotificationRequestXml;
+import com.avvillas.application.dto.PmtNotificationResponseXml;
 import com.avvillas.infrastructure.api.soap.IPmtNotificationController;
 import jakarta.jws.WebService;
 
@@ -17,7 +17,7 @@ public class PmtNotificationController implements IPmtNotificationController {
      * @return Dto con la confirmacion de guardado de la notificacion
      */
     @Override
-    public PmtNotificationResponseDto sendPmtNotification(PmtNotificationRequestDto pmtNotificationRequest) {
-        return new PmtNotificationResponseDto("0", pmtNotificationRequest.getRequestId(), "Fue exitosa la notificación", "98765");
+    public PmtNotificationResponseXml sendPmtNotification(PmtNotificationRequestXml pmtNotificationRequest) {
+        return new PmtNotificationResponseXml("0", pmtNotificationRequest.getRequestId(), "Fue exitosa la notificación", "98765");
     }
 }

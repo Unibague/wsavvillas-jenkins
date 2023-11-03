@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -12,7 +12,7 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * Factura pagada del {@link PmtNotificationRequestDto} o reverso del {@link PmtRollbackRequestDto}
+ * Factura pagada del {@link PmtNotificationRequestXml} o reverso del {@link PmtRollbackRequestXml}
  */
 @Getter
 @Setter
@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @XmlRootElement(name = "PaidInvoices")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaidInvoiceDto {
+public class PaidInvoiceXml {
 
     /**
      * Numero del convenio de la factura (En caso de ser multifacturador)
@@ -56,5 +56,5 @@ public class PaidInvoiceDto {
      * Detalle de valores de la factura pagada
      */
     @XmlElement(name = "ValuesDetail", required = false, namespace = "")
-    private List<ValueDetailDto> valuesDetails;
+    private List<ValueDetailXml> valuesDetails;
 }

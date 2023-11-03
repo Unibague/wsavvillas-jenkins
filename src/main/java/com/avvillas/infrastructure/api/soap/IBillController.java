@@ -1,7 +1,7 @@
 package com.avvillas.infrastructure.api.soap;
 
-import com.avvillas.domain.dto.BillRequestDto;
-import com.avvillas.domain.dto.BillResponseDto;
+import com.avvillas.application.dto.BillRequestXml;
+import com.avvillas.application.dto.BillResponseXml;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
@@ -18,7 +18,7 @@ public interface IBillController {
      * @return Dto con la factura consultada
      */
     @WebMethod
-    public BillResponseDto getBill(@WebParam(name = "BillRequest") BillRequestDto billRequest);
+    public BillResponseXml getBill(@WebParam(name = "BillRequest") BillRequestXml billRequest);
 
     @WebMethod
     public String saludar();

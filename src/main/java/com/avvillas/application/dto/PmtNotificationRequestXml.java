@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import com.avvillas.infrastructure.util.LocalDateTimeAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @XmlRootElement(name = "PmtNotificationRequest")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PmtNotificationRequestDto {
+public class PmtNotificationRequestXml {
 
     /**
      * Id de la solicitud
@@ -49,5 +49,5 @@ public class PmtNotificationRequestDto {
      * Lista con las facturas pagadas
      */
     @XmlElement(name = "PaidInvoices", required = true, namespace = "")
-    private List<PaidInvoiceDto> paidInvoices;
+    private List<PaidInvoiceXml> paidInvoices;
 }

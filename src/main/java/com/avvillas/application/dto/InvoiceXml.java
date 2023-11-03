@@ -1,4 +1,4 @@
-package com.avvillas.domain.dto;
+package com.avvillas.application.dto;
 
 import com.avvillas.infrastructure.util.LocalDateTimeAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Factura de {@link BillResponseDto}
+ * Factura de {@link BillResponseXml}
  */
 @Getter
 @Setter
@@ -23,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @XmlRootElement(name = "Invoice")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class InvoiceDto {
+public class InvoiceXml {
 
     /**
      * Numero de factura
@@ -54,11 +54,11 @@ public class InvoiceDto {
      * Detalles de los valores de la factura
      */
     @XmlElement(name = "ValuesDetail", required = false, namespace = "")
-    private List<ValueDetailDto> valuesDetail;
+    private List<ValueDetailXml> valuesDetail;
 
     /**
      * Detalles adicionales de la factura
      */
     @XmlElement(name = "AdditionalData", required = false, namespace = "")
-    private List<AdditionalDataDto> additionalData;
+    private List<AdditionalDataXml> additionalData;
 }
