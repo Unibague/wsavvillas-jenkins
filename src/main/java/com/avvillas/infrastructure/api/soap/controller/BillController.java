@@ -2,7 +2,9 @@ package com.avvillas.infrastructure.api.soap.controller;
 
 import com.avvillas.domain.dto.BillRequestDto;
 import com.avvillas.domain.dto.BillResponseDto;
+import com.avvillas.domain.usecase.IBillUseCase;
 import com.avvillas.infrastructure.api.soap.IBillController;
+import jakarta.inject.Inject;
 import jakarta.jws.WebService;
 
 /**
@@ -11,6 +13,9 @@ import jakarta.jws.WebService;
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillController", targetNamespace = "http://biller.com/onlinebilling")
 public class BillController implements IBillController {
 
+    @Inject
+    IBillUseCase iBillUseCase;
+
     /**
      * Devuelve la información de una factura solicitada
      * @param billRequest Dto con los datos de la factura a consultar
@@ -18,7 +23,8 @@ public class BillController implements IBillController {
      */
     @Override
     public BillResponseDto getBill(BillRequestDto billRequest) {
-        return new BillResponseDto("0", billRequest.getRequestId(), "Fue exitoso", null);
+        return iBillUseCase.getBill(billRequest);
+    //    return new BillResponseDto("0", billRequest.getRequestId(), "Fue exitoso", null);
     }
 
     @Override
