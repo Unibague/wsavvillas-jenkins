@@ -3,21 +3,27 @@ package com.avvillas.infrastructure.feign;
 import com.avvillas.domain.feign.IAtlanteFeign;
 import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
+import io.quarkus.logging.Log;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.web.client.WebClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
- * Implementación para la API de Atlante
+ * Implementación para consumir la API de Atlante
  */
 @ApplicationScoped
 public class AtlanteFeign implements IAtlanteFeign {
 
     /**
-     * URL global de atlante
+     * URL global de Atlante
      */
     private static final String URL = "*";
+
+    /**
+     * Token para conectarse a Atlante
+     */
+    private static final String TOKEN = "*";
 
     /**
      * Libreria para realizar peticiones REST
@@ -37,11 +43,12 @@ public class AtlanteFeign implements IAtlanteFeign {
     @Override
     public BillResponse getBill(BillRequest billRequest) {
         try {
-            return client.getAbs(URL)
-                    .send()
+            return client.postAbs(URL+"/transactionStatus"+TOKEN)
+                    .sendJson(billRequest)
                     .onItem().transform(r -> r.bodyAsJson(BillResponse.class))
                     .await().indefinitely();
         } catch (Exception e) {
+            Log.error("Fallo Atlante getBill: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

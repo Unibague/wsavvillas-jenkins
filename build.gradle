@@ -19,6 +19,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-vertx'
     implementation 'io.smallrye.reactive:smallrye-mutiny-vertx-web-client'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    implementation 'io.quarkus:quarkus-reactive-pg-client'
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'

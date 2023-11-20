@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -30,6 +31,11 @@ public class BillResponse {
      * Descripcion o mensaje del {@link #status}
      */
     private String message;
+
+    /**
+     * Fecha y hora de la respuesta
+     */
+    private LocalDateTime currentDateTime;
 
     /**
      * Lista con las facturas
