@@ -58,51 +58,64 @@ public class BillService implements IBillUseCase {
     }
 
     /**
-     * Devuelve la información de una factura solicitada
-     * @param billRequestXml Dto con los datos de la factura a consultar
-     * @return Dto con la factura consultada
+     * Devuelve la información de una factura solicitada, guardando los logs de la transaccion
+     * @param billRequestXml XML con los datos de la factura a consultar
+     * @return XML con la factura consultada
      */
     @Override
     public BillResponseXml getBill(BillRequestXml billRequestXml) {
-        billRequestXml.setCurrentDateTime(LocalDateTime.now());
         BillRequest billDto = iBillRequestMapper.toBillRequest(billRequestXml);
 
-        insertBillRequestHistory(billDto);
+        insertRequestHistory(billDto);
 
         BillResponse billResponseJson = atlanteFeign.getBill(billDto);
-        billResponseJson.setRequestId(billRequestXml.getRequestId());
+        billResponseJson.setRequestId(billDto.getRequestId());
         billResponseJson.setCurrentDateTime(LocalDateTime.now());
 
-        insertBillResponseHistory(billResponseJson);
+        insertResponseHistory(billResponseJson);
 
         return iBillResponseMapper.toBillResponseXml(billResponseJson);
     }
 
-
     /**
      * Guarda un log de la peticion en base de datos
-     * @param billRequest Peticion a guardar
+     * @param request BillRequest a guardar
      */
     @Override
-    public void insertBillRequestHistory(BillRequest billRequest) {
+    public <T> void insertRequestHistory(T request) {
+        BillRequest billRequest = (BillRequest) request;
         iTransactionHistoryRepository.insert(iTransactionHistoryDtoMapper.toTransaction(billRequest)).subscribe().with(
-                result -> Log.info("Resultado exitoso BillRequestHistory: " + result.toString()),
+                result -> Log.info("Resultado exitoso BillRequestHistory"),
                 failure -> Log.error("Fallo al guardar BillRequestHistory: " + failure.getMessage())
         );
     }
 
     /**
      * Guarda un log de la respuesta en base de datos
-     * @param billResponse Respuesta a guardar
+     * @param response BillResponse a guardar
      */
     @Override
-    public void insertBillResponseHistory(BillResponse billResponse) {
+    public <T> void insertResponseHistory(T response) {
+        BillResponse billResponse = (BillResponse) response;
+
+        // Si no hay facturas guarda el mensaje de Factura no existe
+        if (billResponse.getInvoices().isEmpty()) {
+            TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(billResponse);
+
+            iTransactionHistoryRepository.insert(transaction).subscribe().with(
+                    result -> Log.info("Resultado exitoso BillResponseHistory"),
+                    failure -> Log.error("Fallo al guardar BillResponseHistory: " + failure.getMessage())
+            );
+            return;
+        }
+
+        // Guarda un log por cada factura recibida
         for (int i = 0; i < billResponse.getInvoices().size(); i++) {
             TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(billResponse);
             transaction.setInvoiceId(billResponse.getInvoices().get(i).getInvoiceId());
 
             iTransactionHistoryRepository.insert(transaction).subscribe().with(
-                    result -> Log.info("Resultado exitoso BillResponseHistory: " + result.toString()),
+                    result -> Log.info("Resultado exitoso BillResponseHistory"),
                     failure -> Log.error("Fallo al guardar BillResponseHistory: " + failure.getMessage())
             );
         }

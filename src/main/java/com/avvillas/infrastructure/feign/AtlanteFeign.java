@@ -3,6 +3,8 @@ package com.avvillas.infrastructure.feign;
 import com.avvillas.domain.feign.IAtlanteFeign;
 import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
+import com.avvillas.domain.model.PmtNotificationRequest;
+import com.avvillas.domain.model.PmtNotificationResponse;
 import io.quarkus.logging.Log;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.web.client.WebClient;
@@ -49,6 +51,24 @@ public class AtlanteFeign implements IAtlanteFeign {
                     .await().indefinitely();
         } catch (Exception e) {
             Log.error("Fallo Atlante getBill: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Consume el endpoint de Atlante para pagar facturas
+     * @param pmtNotificationRequest Dto con los datos de las facturas a pagar
+     * @return Dto con la confirmacion de pago de las facturas
+     */
+    @Override
+    public PmtNotificationResponse sendPmtNotification(PmtNotificationRequest pmtNotificationRequest) {
+        try {
+            return client.postAbs(URL+"/sendPmtNotificationStatus"+TOKEN)
+                    .sendJson(pmtNotificationRequest)
+                    .onItem().transform(r -> r.bodyAsJson(PmtNotificationResponse.class))
+                    .await().indefinitely();
+        } catch (Exception e) {
+            Log.error("Fallo Atlante sendPmtNotification: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

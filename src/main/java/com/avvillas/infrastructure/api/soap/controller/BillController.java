@@ -13,6 +13,9 @@ import jakarta.jws.WebService;
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillController", targetNamespace = "http://biller.com/onlinebilling")
 public class BillController implements IBillController {
 
+    /**
+     * Caso de uso para la consulta de una factura
+     */
     private final IBillUseCase iBillUseCase;
 
     @Inject
@@ -22,8 +25,8 @@ public class BillController implements IBillController {
 
     /**
      * Devuelve la información de una factura solicitada
-     * @param billRequestXml Dto con los datos de la factura a consultar
-     * @return Dto con la factura consultada
+     * @param billRequestXml XML con los datos de la factura a consultar
+     * @return XML con la factura consultada
      */
     @Override
     public BillResponseXml getBill(BillRequestXml billRequestXml) {

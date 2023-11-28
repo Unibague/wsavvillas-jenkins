@@ -14,8 +14,8 @@ public interface IBillController {
 
     /**
      * Devuelve la información de una factura solicitada
-     * @param billRequest Dto con los datos de la factura a consultar
-     * @return Dto con la factura consultada
+     * @param billRequest XML con los datos de la factura a consultar
+     * @return XML con la factura consultada
      */
     @WebMethod
     public BillResponseXml getBill(@WebParam(name = "BillRequest") BillRequestXml billRequest);
