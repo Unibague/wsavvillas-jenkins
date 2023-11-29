@@ -1,5 +1,8 @@
 package com.avvillas.domain.usecase;
 
+import com.avvillas.domain.model.TransactionHistory;
+
+import java.util.List;
 
 /**
  * Caso de uso para el historial de transacciones
@@ -7,14 +10,8 @@ package com.avvillas.domain.usecase;
 public interface ITransactionHistoryUseCase {
 
     /**
-     * Guarda un log de la peticion en base de datos
-     * @param request Peticion a guardar
+     * Devuelve todos los registros del historial de transacciones
+     * @return Los registros consultados
      */
-    public <T> void insertRequestHistory(T request);
-
-    /**
-     * Guarda un log de la respuesta en base de datos
-     * @param response Respuesta a guardar
-     */
-    public <T> void insertResponseHistory(T response);
+    public List<TransactionHistory> getAll();
 }

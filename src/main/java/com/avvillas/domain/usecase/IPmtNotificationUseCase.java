@@ -6,7 +6,7 @@ import com.avvillas.application.dto.PmtNotificationResponseXml;
 /**
  * Caso de uso para el pago de una factura
  */
-public interface IPmtNotificationUseCase extends ITransactionHistoryUseCase {
+public interface IPmtNotificationUseCase extends ITransactionHistoryLogUseCase {
 
     /**
      * Guarda la notificacion de pago que envia el banco de una factura

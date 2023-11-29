@@ -6,7 +6,7 @@ import com.avvillas.application.dto.BillResponseXml;
 /**
  * Caso de uso para la consulta de una factura
  */
-public interface IBillUseCase extends ITransactionHistoryUseCase {
+public interface IBillUseCase extends ITransactionHistoryLogUseCase {
 
     /**
      * Devuelve la información de una factura solicitada

@@ -15,7 +15,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkiverse.cxf:quarkus-cxf'
     implementation 'org.apache.camel.quarkus:camel-quarkus-xmlsecurity'
-    implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-resteasy-jsonb'
     implementation 'io.quarkus:quarkus-vertx'
     implementation 'io.smallrye.reactive:smallrye-mutiny-vertx-web-client'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
