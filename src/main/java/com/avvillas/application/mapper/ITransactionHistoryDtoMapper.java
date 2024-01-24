@@ -2,6 +2,8 @@ package com.avvillas.application.mapper;
 
 import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
+import com.avvillas.domain.model.PmtNotificationRequest;
+import com.avvillas.domain.model.PmtNotificationResponse;
 import com.avvillas.domain.model.TransactionHistory;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -36,6 +38,24 @@ public interface ITransactionHistoryDtoMapper {
     TransactionHistory toTransaction(BillResponse billResponse);
 
     /**
+     * Crea una TransactionHistory con base en una PmtNotificationRequest
+     * @param pmtNotificationRequest PmtNotificationRequest como base
+     * @return Transaction creada
+     */
+    @Mapping(source = "currentDateTime", target = "requestDate")
+    TransactionHistory toTransaction(PmtNotificationRequest pmtNotificationRequest);
+
+    /**
+     * Crea una TransactionHistory con base en una PmtNotificationResponse
+     * @param pmtNotificationResponse PmtNotificationResponse como base
+     * @return Transaction creada
+     */
+    @Mapping(source = "status", target = "numberStatus", qualifiedByName = "stringToInteger")
+    @Mapping(source = "message", target = "messageStatus")
+    TransactionHistory toTransaction(PmtNotificationResponse pmtNotificationResponse);
+
+
+    /**
      * Convierte el valor de searchType a su cadena representativa
      * @param searchType SearchTypeInteger a convertir
      * @return SearchTypeString convertido
@@ -44,7 +64,7 @@ public interface ITransactionHistoryDtoMapper {
     default String convertSearchTypeIntegerToString(Integer searchType) {
         if (searchType == 2) {
             return "Numero de factura";
-        } else if (searchType == 3) {
+        } else if (searchType == 1 || searchType == 3) {
             return "Numero de identificacion";
         }
         return "";

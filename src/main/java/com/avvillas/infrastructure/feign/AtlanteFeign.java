@@ -63,7 +63,7 @@ public class AtlanteFeign implements IAtlanteFeign {
     @Override
     public PmtNotificationResponse sendPmtNotification(PmtNotificationRequest pmtNotificationRequest) {
         try {
-            return client.postAbs(URL+"/sendPmtNotificationStatus"+TOKEN)
+            return client.postAbs(URL+"/registerPayment"+TOKEN)
                     .sendJson(pmtNotificationRequest)
                     .onItem().transform(r -> r.bodyAsJson(PmtNotificationResponse.class))
                     .await().indefinitely();

@@ -8,13 +8,17 @@ import com.avvillas.application.mapper.ITransactionHistoryDtoMapper;
 import com.avvillas.domain.feign.IAtlanteFeign;
 import com.avvillas.domain.model.PmtNotificationRequest;
 import com.avvillas.domain.model.PmtNotificationResponse;
+import com.avvillas.domain.model.TransactionHistory;
 import com.avvillas.domain.repository.ITransactionHistoryRepository;
 import com.avvillas.domain.usecase.IPmtNotificationUseCase;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.LocalDateTime;
+
 /**
- *
+ * Servicio para el pago de las facturas
  */
 @ApplicationScoped
 public class PmtNotificationService implements IPmtNotificationUseCase {
@@ -71,13 +75,43 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
         return iPmtNotificationResponseMapper.toPmtNotificationResponseXml(pmtNotificationResponseJson);
     }
 
+    /**
+     * Guarda un log de la peticion en base de datos
+     * @param request PmtNotificationRequest a guardar
+     */
     @Override
     public <T> void insertRequestHistory(T request) {
+        PmtNotificationRequest pmtNotificationRequest = (PmtNotificationRequest) request;
+
+        for (int i = 0; i < pmtNotificationRequest.getPaidInvoices().size(); i++) {
+            TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(pmtNotificationRequest);
+            transaction.setInvoiceId(pmtNotificationRequest.getPaidInvoices().get(i).getInvoiceId());
+            transaction.setMessageStatus("Pagar factura");
+            iTransactionHistoryRepository.insert(transaction)
+                    .subscribe().with(
+                            result -> Log.info("Resultado exitoso PmtNotificationRequestHistory"),
+                            failure -> Log.error("Fallo al guardar PmtNotificationRequestHistory: " + failure.getMessage())
+                    );
+        }
 
     }
 
+    /**
+     * Guarda un log de la respuesta en base de datos
+     * @param response PmtNotificationResponse a guardar
+     */
     @Override
     public <T> void insertResponseHistory(T response) {
-
+        PmtNotificationResponse pmtNotificationResponse = (PmtNotificationResponse) response;
+        TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(pmtNotificationResponse);
+        if (transaction.getNumberStatus() == 0) {
+            transaction.setMessageStatus(transaction.getMessageStatus()+" (Factura pagada correctamente)");
+        }
+        transaction.setRequestDate(LocalDateTime.now());
+        iTransactionHistoryRepository.insert(transaction)
+                .subscribe().with(
+                        result -> Log.info("Resultado exitoso PmtNotificationResponseHistory"),
+                        failure -> Log.error("Fallo al guardar PmtNotificationResponseHistory: " + failure.getMessage())
+                );
     }
 }
