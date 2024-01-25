@@ -6,6 +6,7 @@ import com.avvillas.application.mapper.IPmtNotificationRequestMapper;
 import com.avvillas.application.mapper.IPmtNotificationResponseMapper;
 import com.avvillas.application.mapper.ITransactionHistoryDtoMapper;
 import com.avvillas.domain.feign.IAtlanteFeign;
+import com.avvillas.domain.model.MessagesLog;
 import com.avvillas.domain.model.PmtNotificationRequest;
 import com.avvillas.domain.model.PmtNotificationResponse;
 import com.avvillas.domain.model.TransactionHistory;
@@ -68,9 +69,17 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
 
         insertRequestHistory(pmtNotificationRequest);
 
-        PmtNotificationResponse pmtNotificationResponseJson = atlanteFeign.sendPmtNotification(pmtNotificationRequest);
+        PmtNotificationResponse pmtNotificationResponseJson = new PmtNotificationResponse();
 
-        insertResponseHistory(pmtNotificationResponseJson);
+        try {
+            pmtNotificationResponseJson = atlanteFeign.sendPmtNotification(pmtNotificationRequest);
+            insertResponseHistory(pmtNotificationResponseJson, null);
+        } catch (Exception e) {
+            pmtNotificationResponseJson.setRequestId(pmtNotificationRequest.getRequestId());
+            pmtNotificationResponseJson.setStatus("1");
+            pmtNotificationResponseJson.setMessage("Error inesperado");
+            insertResponseHistory(pmtNotificationResponseJson, e.getMessage());
+        }
 
         return iPmtNotificationResponseMapper.toPmtNotificationResponseXml(pmtNotificationResponseJson);
     }
@@ -89,8 +98,8 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
             transaction.setMessageStatus("Pagar factura");
             iTransactionHistoryRepository.insert(transaction)
                     .subscribe().with(
-                            result -> Log.info("Resultado exitoso PmtNotificationRequestHistory"),
-                            failure -> Log.error("Fallo al guardar PmtNotificationRequestHistory: " + failure.getMessage())
+                            result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" PmtNotificationRequestHistory")),
+                            failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" PmtNotificationRequestHistory: " + failure.getMessage()))
                     );
         }
 
@@ -101,17 +110,29 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
      * @param response PmtNotificationResponse a guardar
      */
     @Override
-    public <T> void insertResponseHistory(T response) {
+    public <T> void insertResponseHistory(T response, String exceptionMessage) {
         PmtNotificationResponse pmtNotificationResponse = (PmtNotificationResponse) response;
         TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(pmtNotificationResponse);
+        transaction.setRequestDate(LocalDateTime.now());
+
+        if (exceptionMessage != null) {
+            transaction.setException(exceptionMessage);
+
+            iTransactionHistoryRepository.insert(transaction).subscribe().with(
+                    result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" excepcion PmtNotificationResponse")),
+                    failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" excepcion PmtNotificationResponse: " + failure.getMessage()))
+            );
+            return;
+        }
+
         if (transaction.getNumberStatus() == 0) {
             transaction.setMessageStatus(transaction.getMessageStatus()+" (Factura pagada correctamente)");
         }
-        transaction.setRequestDate(LocalDateTime.now());
+
         iTransactionHistoryRepository.insert(transaction)
                 .subscribe().with(
-                        result -> Log.info("Resultado exitoso PmtNotificationResponseHistory"),
-                        failure -> Log.error("Fallo al guardar PmtNotificationResponseHistory: " + failure.getMessage())
+                        result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" PmtNotificationResponseHistory")),
+                        failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" PmtNotificationResponseHistory: " + failure.getMessage()))
                 );
     }
 }

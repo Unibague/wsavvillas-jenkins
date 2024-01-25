@@ -15,6 +15,7 @@ public interface ITransactionHistoryLogUseCase {
     /**
      * Guarda un log de la respuesta en base de datos
      * @param response Respuesta a guardar
+     * @param exceptionMessage Mensaje de excepcion en caso de error
      */
-    public <T> void insertResponseHistory(T response);
+    public <T> void insertResponseHistory(T response, String exceptionMessage);
 }

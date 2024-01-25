@@ -8,6 +8,7 @@ import com.avvillas.application.mapper.ITransactionHistoryDtoMapper;
 import com.avvillas.domain.feign.IAtlanteFeign;
 import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
+import com.avvillas.domain.model.MessagesLog;
 import com.avvillas.domain.model.TransactionHistory;
 import com.avvillas.domain.repository.ITransactionHistoryRepository;
 import com.avvillas.domain.usecase.IBillUseCase;
@@ -68,11 +69,20 @@ public class BillService implements IBillUseCase {
 
         insertRequestHistory(billDto);
 
-        BillResponse billResponseJson = atlanteFeign.getBill(billDto);
-        billResponseJson.setRequestId(billDto.getRequestId());
-        billResponseJson.setCurrentDateTime(LocalDateTime.now());
+        BillResponse billResponseJson = new BillResponse();
 
-        insertResponseHistory(billResponseJson);
+        try {
+            billResponseJson = atlanteFeign.getBill(billDto);
+            billResponseJson.setRequestId(billDto.getRequestId());
+            billResponseJson.setCurrentDateTime(LocalDateTime.now());
+            insertResponseHistory(billResponseJson, null);
+        } catch (Exception e) {
+            billResponseJson.setRequestId(billDto.getRequestId());
+            billResponseJson.setCurrentDateTime(LocalDateTime.now());
+            billResponseJson.setStatus("1");
+            billResponseJson.setMessage("Error inesperado");
+            insertResponseHistory(billResponseJson, e.getMessage());
+        }
 
         return iBillResponseMapper.toBillResponseXml(billResponseJson);
     }
@@ -85,8 +95,8 @@ public class BillService implements IBillUseCase {
     public <T> void insertRequestHistory(T request) {
         BillRequest billRequest = (BillRequest) request;
         iTransactionHistoryRepository.insert(iTransactionHistoryDtoMapper.toTransaction(billRequest)).subscribe().with(
-                result -> Log.info("Resultado exitoso BillRequestHistory"),
-                failure -> Log.error("Fallo al guardar BillRequestHistory: " + failure.getMessage())
+                result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" BillRequestHistory")),
+                failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" BillRequestHistory: " + failure.getMessage()))
         );
     }
 
@@ -95,16 +105,27 @@ public class BillService implements IBillUseCase {
      * @param response BillResponse a guardar
      */
     @Override
-    public <T> void insertResponseHistory(T response) {
+    public <T> void insertResponseHistory(T response, String exceptionMessage) {
         BillResponse billResponse = (BillResponse) response;
+
+        if (exceptionMessage != null) {
+            TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(billResponse);
+            transaction.setException(exceptionMessage);
+
+            iTransactionHistoryRepository.insert(transaction).subscribe().with(
+                    result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" excepcion BillResponseHistory")),
+                    failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" excepcion BillResponseHistory: " + failure.getMessage()))
+            );
+            return;
+        }
 
         // Si no hay facturas guarda el mensaje de Factura no existe
         if (billResponse.getInvoices().isEmpty()) {
             TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(billResponse);
 
             iTransactionHistoryRepository.insert(transaction).subscribe().with(
-                    result -> Log.info("Resultado exitoso BillResponseHistory"),
-                    failure -> Log.error("Fallo al guardar BillResponseHistory: " + failure.getMessage())
+                    result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" BillResponseHistory")),
+                    failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" BillResponseHistory: " + failure.getMessage()))
             );
             return;
         }
@@ -113,10 +134,11 @@ public class BillService implements IBillUseCase {
         for (int i = 0; i < billResponse.getInvoices().size(); i++) {
             TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(billResponse);
             transaction.setInvoiceId(billResponse.getInvoices().get(i).getInvoiceId());
+            transaction.setMessageStatus(transaction.getMessageStatus()+" (Factura consultada correctamente)");
 
             iTransactionHistoryRepository.insert(transaction).subscribe().with(
-                    result -> Log.info("Resultado exitoso BillResponseHistory"),
-                    failure -> Log.error("Fallo al guardar BillResponseHistory: " + failure.getMessage())
+                    result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" BillResponseHistory")),
+                    failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" BillResponseHistory: " + failure.getMessage()))
             );
         }
     }
