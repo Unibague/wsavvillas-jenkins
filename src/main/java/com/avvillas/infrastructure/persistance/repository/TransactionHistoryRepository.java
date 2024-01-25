@@ -62,7 +62,7 @@ public class TransactionHistoryRepository implements ITransactionHistoryReposito
     public List<TransactionHistory> findAll() {
         return iTransactionHistoryEntityMapper.toTransactionList(
                 pgClient
-                        .query("SELECT * FROM transaction_history")
+                        .query("SELECT * FROM transaction_history ORDER BY request_date DESC")
                         .execute()
                         .onItem().transformToMulti(set -> Multi.createFrom().iterable(set))
                         .onItem().transform(TransactionHistoryEntity::from)
