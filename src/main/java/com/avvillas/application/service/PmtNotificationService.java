@@ -66,13 +66,14 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
     @Override
     public PmtNotificationResponseXml sendPmtNotification(PmtNotificationRequestXml pmtNotificationRequestXml) {
         PmtNotificationRequest pmtNotificationRequest = iPmtNotificationRequestMapper.toPmtNotificationRequest(pmtNotificationRequestXml);
-
+        pmtNotificationRequest.setCurrentDateTime(LocalDateTime.now());
         insertRequestHistory(pmtNotificationRequest);
 
         PmtNotificationResponse pmtNotificationResponseJson = new PmtNotificationResponse();
 
         try {
             pmtNotificationResponseJson = atlanteFeign.sendPmtNotification(pmtNotificationRequest);
+            pmtNotificationResponseJson.setRequestId(pmtNotificationRequest.getRequestId());
             insertResponseHistory(pmtNotificationResponseJson, null);
         } catch (Exception e) {
             pmtNotificationResponseJson.setRequestId(pmtNotificationRequest.getRequestId());
@@ -95,7 +96,8 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
         for (int i = 0; i < pmtNotificationRequest.getPaidInvoices().size(); i++) {
             TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(pmtNotificationRequest);
             transaction.setInvoiceId(pmtNotificationRequest.getPaidInvoices().get(i).getInvoiceId());
-            transaction.setMessageStatus("Pagar factura");
+            transaction.setPaidValue(pmtNotificationRequest.getPaidInvoices().get(i).getPaidValue());
+
             iTransactionHistoryRepository.insert(transaction)
                     .subscribe().with(
                             result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" PmtNotificationRequestHistory")),
@@ -117,7 +119,7 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
 
         if (exceptionMessage != null) {
             transaction.setException(exceptionMessage);
-
+            transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()));
             iTransactionHistoryRepository.insert(transaction).subscribe().with(
                     result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" excepcion PmtNotificationResponse")),
                     failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" excepcion PmtNotificationResponse: " + failure.getMessage()))
@@ -126,7 +128,13 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
         }
 
         if (transaction.getNumberStatus() == 0) {
-            transaction.setMessageStatus(transaction.getMessageStatus()+" (Factura pagada correctamente)");
+            transaction.setMessageStatus("Exito: ".concat(" Factura pagada correctamente"));
+        } else if (transaction.getNumberStatus() == 1) {
+            transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()));
+        } else if (transaction.getNumberStatus() == 82) {
+            transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()).concat(" (No se encontro la factura)"));
+        } else if (transaction.getNumberStatus() == 84) {
+            transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()).concat(" (Factura pagada en el pasado"));
         }
 
         iTransactionHistoryRepository.insert(transaction)

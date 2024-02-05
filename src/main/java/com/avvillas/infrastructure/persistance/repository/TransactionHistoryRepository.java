@@ -77,9 +77,11 @@ public class TransactionHistoryRepository implements ITransactionHistoryReposito
      */
     @Override
     public Uni<Void> insert(TransactionHistory t) {
-        String query = "INSERT INTO transaction_history (request_id, search_type, invoice_id, number_status, message_status, request_date, exception) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+        String query = "INSERT INTO transaction_history (request_id, search_type, invoice_id, invoice_card, paid_value, number_status, message_status, request_date, who_send_petition, str_web_service, exception) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
         Tuple tupleElements =
-                Tuple.tuple(Arrays.asList(t.getRequestId(), t.getSearchType(), t.getInvoiceId(), t.getNumberStatus(), t.getMessageStatus(), t.getRequestDate(), t.getException()));
+                Tuple.tuple(Arrays.asList(t.getRequestId(), t.getSearchType(), t.getInvoiceId(), t.getInvoiceCard(),
+                        t.getPaidValue(), t.getNumberStatus(), t.getMessageStatus(), t.getRequestDate(),
+                        t.getWhoSendPetition(), "AV Villas", t.getException()));
 
         return Uni.combine().all().unis(pgClient.preparedQuery(query).execute(tupleElements)).discardItems();
     }

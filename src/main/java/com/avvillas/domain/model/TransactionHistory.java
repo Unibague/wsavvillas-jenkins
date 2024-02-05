@@ -34,6 +34,16 @@ public class TransactionHistory {
     private String invoiceId;
 
     /**
+     * Cedula a la que pertenece una factura
+     */
+    private String invoiceCard;
+
+    /**
+     * Valor de la factura
+     */
+    private Double paidValue;
+
+    /**
      * Tipo de busqueda cuando se consulta una factura o numero de respuesta a la solicitud
      */
     private Integer numberStatus;
@@ -47,6 +57,16 @@ public class TransactionHistory {
      * Fecha de la solicitud y respuesta
      */
     private LocalDateTime requestDate;
+
+    /**
+     * Campo para indicar si la peticion la hace la universidad o el banco
+     */
+    private String whoSendPetition;
+
+    /**
+     * Campo que indica a que web service pertenece la transaccion
+     */
+    private String strWebService;
 
     /**
      * Guarda las excepciones de ser necesario

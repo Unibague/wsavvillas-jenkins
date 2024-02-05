@@ -42,4 +42,9 @@ public class BillResponse {
      * Opcional Si {@link #status} es diferente a 0
      */
     private List<Invoice> invoices;
+
+    /**
+     * Cedula a la que pertenecen las facturas
+     */
+    private String invoicesCard;
 }

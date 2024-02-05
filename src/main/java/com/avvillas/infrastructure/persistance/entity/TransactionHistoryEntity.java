@@ -30,6 +30,16 @@ public class TransactionHistoryEntity {
     public String invoiceId;
 
     /**
+     * Cedula a la que pertenece una factura
+     */
+    public String invoiceCard;
+
+    /**
+     * Valor de la factura
+     */
+    public Double paidValue;
+
+    /**
      * Numero de solicitud cuando se consulta una factura o numero de respuesta a la solicitud
      */
     public Integer numberStatus;
@@ -43,6 +53,16 @@ public class TransactionHistoryEntity {
      * Fecha de la solicitud y respuesta
      */
     public LocalDateTime requestDate;
+
+    /**
+     * Campo para indicar si la peticion la hace la universidad o el banco
+     */
+    public String whoSendPetition;
+
+    /**
+     * Campo que indica a que web service pertenece la transaccion
+     */
+    public String strWebService;
 
     /**
      * Guarda las excepciones de ser necesario
@@ -61,9 +81,13 @@ public class TransactionHistoryEntity {
         newTransaction.requestId = row.getString("request_id");
         newTransaction.searchType = row.getString("search_type");
         newTransaction.invoiceId = row.getString("invoice_id");
+        newTransaction.invoiceCard = row.getString("invoice_card");
+        newTransaction.paidValue = row.getDouble("paid_value");
         newTransaction.numberStatus = row.getInteger("number_status");
         newTransaction.messageStatus = row.getString("message_status");
         newTransaction.requestDate = row.getLocalDateTime("request_date");
+        newTransaction.whoSendPetition = row.getString("who_send_petition");
+        newTransaction.strWebService = row.getString("str_web_service");
         newTransaction.exception = row.getString("exception");
 
         return newTransaction;

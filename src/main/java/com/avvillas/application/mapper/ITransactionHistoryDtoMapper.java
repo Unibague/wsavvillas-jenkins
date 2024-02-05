@@ -22,8 +22,9 @@ public interface ITransactionHistoryDtoMapper {
      */
     @Mapping(source = "searchType", target = "searchType", qualifiedByName = "convertSearchTypeIntegerToString")
     @Mapping(source = "searchType", target = "numberStatus")
-    @Mapping(target = "messageStatus", constant = "Consultar factura")
+    @Mapping(target = "messageStatus", constant = "Peticion: Consultar factura")
     @Mapping(source = "currentDateTime", target = "requestDate")
+    @Mapping(target = "whoSendPetition", constant = "Solicita: Banco AV Villas")
     TransactionHistory toTransaction(BillRequest billRequest);
 
 
@@ -35,6 +36,7 @@ public interface ITransactionHistoryDtoMapper {
     @Mapping(source = "status", target = "numberStatus", qualifiedByName = "stringToInteger")
     @Mapping(source = "message", target = "messageStatus")
     @Mapping(source = "currentDateTime", target = "requestDate")
+    @Mapping(target = "whoSendPetition", constant = "Responde: Unibague")
     TransactionHistory toTransaction(BillResponse billResponse);
 
     /**
@@ -43,6 +45,8 @@ public interface ITransactionHistoryDtoMapper {
      * @return Transaction creada
      */
     @Mapping(source = "currentDateTime", target = "requestDate")
+    @Mapping(target = "messageStatus", constant = "Peticion: Pagar factura")
+    @Mapping(target = "whoSendPetition", constant = "Solicita: Banco AV Villas")
     TransactionHistory toTransaction(PmtNotificationRequest pmtNotificationRequest);
 
     /**
@@ -52,6 +56,7 @@ public interface ITransactionHistoryDtoMapper {
      */
     @Mapping(source = "status", target = "numberStatus", qualifiedByName = "stringToInteger")
     @Mapping(source = "message", target = "messageStatus")
+    @Mapping(target = "whoSendPetition", constant = "Responde: Unibague")
     TransactionHistory toTransaction(PmtNotificationResponse pmtNotificationResponse);
 
 
