@@ -8,7 +8,7 @@ import jakarta.jws.WebService;
 /**
  * Controlador para el reverso de una factura
  */
-@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtRollbackController", targetNamespace = "http://biller.com/onlinebilling")
+@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtRollbackController")
 public class PmtRollbackController implements IPmtRollbackController {
 
     /**

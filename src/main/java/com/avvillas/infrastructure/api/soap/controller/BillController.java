@@ -10,7 +10,7 @@ import jakarta.jws.WebService;
 /**
  * Controlador para la consulta de una factura
  */
-@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillController", targetNamespace = "http://biller.com/onlinebilling")
+@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillController")
 public class BillController implements IBillController {
 
     /**

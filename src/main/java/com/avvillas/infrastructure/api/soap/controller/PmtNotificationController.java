@@ -10,7 +10,7 @@ import jakarta.jws.WebService;
 /**
  * Controlador para la notificacion de pago de una factura
  */
-@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtNotificationController", targetNamespace = "http://biller.com/onlinebilling")
+@WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtNotificationController")
 public class PmtNotificationController implements IPmtNotificationController {
 
     /**
