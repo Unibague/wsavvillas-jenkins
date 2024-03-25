@@ -6,6 +6,10 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        name = "ShibbolethRepo"
+        url = uri("https://build.shibboleth.net/nexus/content/groups/public")
+    }
 }
 
 dependencies {
@@ -14,7 +18,7 @@ dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-cxf-bom:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkiverse.cxf:quarkus-cxf'
-    implementation 'org.apache.camel.quarkus:camel-quarkus-xmlsecurity'
+    implementation 'io.quarkiverse.cxf:quarkus-cxf-rt-ws-security'
     implementation 'io.quarkus:quarkus-resteasy-jsonb'
     implementation 'io.quarkus:quarkus-vertx'
     implementation 'io.smallrye.reactive:smallrye-mutiny-vertx-web-client'
