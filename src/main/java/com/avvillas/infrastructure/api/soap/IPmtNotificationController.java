@@ -6,11 +6,12 @@ import com.avvillas.infrastructure.security.WSS4JInterceptorOutATH;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
+import jakarta.xml.bind.annotation.XmlElement;
 import org.apache.cxf.interceptor.InInterceptors;
 import org.apache.cxf.interceptor.OutInterceptors;
 
 /**
- * Interfaz para el controlador de la notificacion de pago de una factura
+ * Interfaz para el controlador de la notificacion de pago de una factura desde ATH
  */
 @WebService(targetNamespace = "http://biller.com/onlinebilling")
 //@InInterceptors(classes = {WSS4JInterceptorOutATH.class})
@@ -23,5 +24,5 @@ public interface IPmtNotificationController {
      * @return Dto con la confirmacion del pago recibido
      */
     @WebMethod
-    public PmtNotificationResponseXml sendPmtNotification(@WebParam(name = "PmtNotificationRequest") PmtNotificationRequestXml pmtNotificationRequestXml);
+    public PmtNotificationResponseXml sendPmtNotification(@WebParam(name = "PmtNotificationRequest") @XmlElement(required = true) PmtNotificationRequestXml pmtNotificationRequestXml);
 }

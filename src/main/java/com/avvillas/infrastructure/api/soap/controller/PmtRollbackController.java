@@ -6,7 +6,7 @@ import com.avvillas.infrastructure.api.soap.IPmtRollbackController;
 import jakarta.jws.WebService;
 
 /**
- * Controlador para el reverso de una factura
+ * Controlador para el reverso de una factura desde ATH
  */
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtRollbackController")
 public class PmtRollbackController implements IPmtRollbackController {

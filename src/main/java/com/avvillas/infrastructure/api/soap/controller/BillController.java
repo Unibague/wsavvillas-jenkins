@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.jws.WebService;
 
 /**
- * Controlador para la consulta de una factura
+ * Controlador para la consulta de una factura desde ATH
  */
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillController")
 public class BillController implements IBillController {

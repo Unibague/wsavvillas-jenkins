@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.jws.WebService;
 
 /**
- * Controlador para la notificacion de pago de una factura
+ * Controlador para la notificacion de pago de una factura desde ATH
  */
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IPmtNotificationController")
 public class PmtNotificationController implements IPmtNotificationController {
