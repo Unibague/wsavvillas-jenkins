@@ -2,6 +2,7 @@ package com.avvillas.infrastructure.api.soap;
 
 import com.avvillas.application.dto.ConsultBillAvVillasRequestXml;
 import com.avvillas.application.dto.ConsultBillAvVillasResponseXml;
+import com.avvillas.infrastructure.security.WSS4JInterceptorInAvVillas;
 import com.avvillas.infrastructure.security.WSS4JInterceptorOutAvVillas;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -14,7 +15,7 @@ import org.apache.cxf.interceptor.OutInterceptors;
  * Interfaz para el controlador de la consulta de una factura desde AvVillas
  */
 @WebService(targetNamespace = "http://organizacion.com/wsEstandar/")
-//@InInterceptors(classes = {WSS4JInterceptorOutAvVillas.class})
+//@InInterceptors(classes = {WSS4JInterceptorInAvVillas.class})
 //@OutInterceptors(classes = {WSS4JInterceptorOutAvVillas.class})
 public interface IConsultBillAvVillasController {
 
