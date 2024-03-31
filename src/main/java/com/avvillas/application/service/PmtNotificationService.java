@@ -19,7 +19,7 @@ import jakarta.inject.Inject;
 import java.time.LocalDateTime;
 
 /**
- * Servicio para el pago de las facturas
+ * Servicio para el pago de las facturas desde ATH
  */
 @ApplicationScoped
 public class PmtNotificationService implements IPmtNotificationUseCase {

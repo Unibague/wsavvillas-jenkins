@@ -20,7 +20,7 @@ import org.apache.cxf.annotations.UseAsyncMethod;
 import java.time.LocalDateTime;
 
 /**
- * Servicio para la consulta de una factura
+ * Servicio para la consulta de una factura desde ATH
  */
 @ApplicationScoped
 public class BillService implements IBillUseCase {

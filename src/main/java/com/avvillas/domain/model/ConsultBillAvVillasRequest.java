@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 /**
  * Objeto de dominio para Consulta de una factura desde AvVillas hacia el convenio
  */
@@ -44,19 +47,19 @@ public class ConsultBillAvVillasRequest {
      * Fecha en la cual se realiza la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    private String transactionDate;
+    private LocalDateTime transactionDate;
 
     /**
      * Hora en la cual se realiza la transaccion.
      * En formato HHMMSS 130452
      */
-    private String transactionHour;
+    private LocalTime transactionHour;
 
     /**
      * Fecha en la cual se hará efectiva la transacción.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    private String compensationDate;
+    private LocalDateTime compensationDate;
 
     /**
      * Primera referencia que identifica la factura con la que se está realizando la transaccion.

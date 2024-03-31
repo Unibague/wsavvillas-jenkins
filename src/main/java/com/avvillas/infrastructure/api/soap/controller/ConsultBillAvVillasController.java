@@ -2,7 +2,9 @@ package com.avvillas.infrastructure.api.soap.controller;
 
 import com.avvillas.application.dto.ConsultBillAvVillasRequestXml;
 import com.avvillas.application.dto.ConsultBillAvVillasResponseXml;
+import com.avvillas.domain.usecase.IConsultBillAvVillasUseCase;
 import com.avvillas.infrastructure.api.soap.IConsultBillAvVillasController;
+import jakarta.inject.Inject;
 import jakarta.jws.WebService;
 
 /**
@@ -11,6 +13,12 @@ import jakarta.jws.WebService;
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IConsultBillAvVillasController")
 public class ConsultBillAvVillasController implements IConsultBillAvVillasController {
 
+    private final IConsultBillAvVillasUseCase iConsultBillAvVillasUseCase;
+
+    @Inject
+    public ConsultBillAvVillasController(IConsultBillAvVillasUseCase iConsultBillAvVillasUseCase) {
+        this.iConsultBillAvVillasUseCase = iConsultBillAvVillasUseCase;
+    }
 
     /**
      * Devuelve la información de una factura solicitada
@@ -19,6 +27,6 @@ public class ConsultBillAvVillasController implements IConsultBillAvVillasContro
      */
     @Override
     public ConsultBillAvVillasResponseXml consultBill(ConsultBillAvVillasRequestXml consultBillRequest) {
-        return new ConsultBillAvVillasResponseXml(consultBillRequest.getBankCodeOrigin(), "asd", "asd", 1234, "3423", "12223", "12r134", "123123", 423, "asfas", "43534", "234234");
+        return iConsultBillAvVillasUseCase.consultBill(consultBillRequest);
     }
 }

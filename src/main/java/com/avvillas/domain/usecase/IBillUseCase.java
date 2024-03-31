@@ -4,7 +4,7 @@ import com.avvillas.application.dto.BillRequestXml;
 import com.avvillas.application.dto.BillResponseXml;
 
 /**
- * Caso de uso para la consulta de una factura
+ * Caso de uso para la consulta de una factura desde ATH
  */
 public interface IBillUseCase extends ITransactionHistoryLogUseCase {
 

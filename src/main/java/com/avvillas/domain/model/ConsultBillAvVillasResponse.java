@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 /**
  * Objeto de dominio para Respuesta de una factura desde el convenio hacia AvVillas
  */
@@ -44,19 +47,19 @@ public class ConsultBillAvVillasResponse {
      * Fecha en la cual se realiza la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    private String transactionDate;
+    private LocalDateTime transactionDate;
 
     /**
      * Hora en la cual se realiza la transaccion.
      * En formato HHMMSS 130452
      */
-    private String transactionHour;
+    private LocalTime transactionHour;
 
     /**
      * Fecha en la cual se hará efectiva la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    private String compensationDate;
+    private LocalDateTime compensationDate;
 
     /**
      * Codigo de respuesta
@@ -81,7 +84,7 @@ public class ConsultBillAvVillasResponse {
     /**
      * Valor total de la factura.
      */
-    private String totalValue;
+    private Double totalValue;
 
     /**
      * Fecha en la cual la factura expira.

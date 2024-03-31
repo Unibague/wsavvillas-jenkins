@@ -4,7 +4,7 @@ import com.avvillas.application.dto.PmtNotificationRequestXml;
 import com.avvillas.application.dto.PmtNotificationResponseXml;
 
 /**
- * Caso de uso para el pago de una factura
+ * Caso de uso para el pago de una factura desde ATH
  */
 public interface IPmtNotificationUseCase extends ITransactionHistoryLogUseCase {
 

@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
 /**
- * Clase encargada de servir como interceptor en cada peticion HTTP
+ * Clase encargada de servir como interceptor en cada peticion HTTP REST
  */
 @Provider
 @Priority(1)
@@ -19,7 +19,7 @@ import jakarta.ws.rs.ext.Provider;
 public class HeaderValidationFilter implements ContainerRequestFilter {
 
     /**
-     * Cabezeras de la solicitud HTTP
+     * Cabezeras de la solicitud HTTP REST
      */
     @Context
     private HttpHeaders headers;
@@ -31,7 +31,7 @@ public class HeaderValidationFilter implements ContainerRequestFilter {
     GoogleAuthProvider googleAuthProvider;
 
     /**
-     * Implementacion del filtro que se ejecuta en cada peticion HTTP
+     * Implementacion del filtro que se ejecuta en cada peticion HTTP REST
      * @param requestContext request context.
      */
     @Override
