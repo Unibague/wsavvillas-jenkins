@@ -82,6 +82,11 @@ public class ConsultBillAvVillasResponse {
     private String responseMessage;
 
     /**
+     * Referencia que identifica la factura con la que se está realizando la transaccion.
+     */
+    private String referenceOne;
+
+    /**
      * Valor total de la factura.
      */
     private Double totalValue;
@@ -90,5 +95,5 @@ public class ConsultBillAvVillasResponse {
      * Fecha en la cual la factura expira.
      * En formato YYYYMMDD ejemplo 20110526.
      */
-    private String expirationDate;
+    private LocalDateTime expirationDate;
 }

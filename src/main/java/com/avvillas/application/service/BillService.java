@@ -143,7 +143,7 @@ public class BillService implements IBillUseCase {
             TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(billResponse);
             transaction.setInvoiceId(billResponse.getInvoices().get(i).getInvoiceId());
             transaction.setInvoiceCard(billResponse.getInvoicesCard());
-            transaction.setMessageStatus("Exito: ".concat(" Factura consultada correctamente"));
+            transaction.setMessageStatus("Exito: ".concat("Factura consultada correctamente"));
             transaction.setPaidValue(billResponse.getInvoices().get(i).getTotalValue());
 
             iTransactionHistoryRepository.insert(transaction).subscribe().with(

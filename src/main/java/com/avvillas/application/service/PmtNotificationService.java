@@ -137,10 +137,9 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
             transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()).concat(" (Factura pagada en el pasado"));
         }
 
-        iTransactionHistoryRepository.insert(transaction)
-                .subscribe().with(
-                        result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" PmtNotificationResponseHistory")),
-                        failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" PmtNotificationResponseHistory: " + failure.getMessage()))
-                );
+        iTransactionHistoryRepository.insert(transaction).subscribe().with(
+                result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" PmtNotificationResponseHistory")),
+                failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" PmtNotificationResponseHistory: " + failure.getMessage()))
+        );
     }
 }

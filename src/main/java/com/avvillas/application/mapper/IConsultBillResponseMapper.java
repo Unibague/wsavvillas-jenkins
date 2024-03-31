@@ -36,8 +36,11 @@ public interface IConsultBillResponseMapper {
      */
     @Named("dateToString")
     default String dateToString(LocalDateTime dateTime) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd");
-        return dateTime.format(formato);
+        if (dateTime != null) {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyyMMdd");
+            return dateTime.format(formato);
+        }
+        return null;
     }
 
     /**
@@ -58,6 +61,9 @@ public interface IConsultBillResponseMapper {
      */
     @Named("doubleToString")
     default String stringToInteger(Double value) {
-        return String.valueOf(value);
+        if (value != null) {
+            return String.valueOf(value);
+        }
+        return null;
     }
 }
