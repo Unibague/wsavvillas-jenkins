@@ -5,6 +5,8 @@ import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
 import com.avvillas.domain.model.ConsultBillAvVillasRequest;
 import com.avvillas.domain.model.ConsultBillAvVillasResponse;
+import com.avvillas.domain.model.PayBillAvVillasRequest;
+import com.avvillas.domain.model.PayBillAvVillasResponse;
 import com.avvillas.domain.model.PmtNotificationRequest;
 import com.avvillas.domain.model.PmtNotificationResponse;
 import io.quarkus.logging.Log;
@@ -40,7 +42,7 @@ public class AtlanteFeign implements IAtlanteFeign {
     }
 
     /**
-     * Consume el endpoint de Atlante para consultar la factura
+     * Consume el endpoint de Atlante para consultar la factura solicitada por ATH
      * @param billRequest Dto con los datos de la factura a consultar
      * @return Dto con la factura consultada
      */
@@ -58,7 +60,7 @@ public class AtlanteFeign implements IAtlanteFeign {
     }
 
     /**
-     * Consume el endpoint de Atlante para pagar facturas
+     * Consume el endpoint de Atlante para pagar facturas enviadas por ATH
      * @param pmtNotificationRequest Dto con los datos de las facturas a pagar
      * @return Dto con la confirmacion de pago de las facturas
      */
@@ -89,6 +91,24 @@ public class AtlanteFeign implements IAtlanteFeign {
                     .await().indefinitely();
         } catch (Exception e) {
             Log.error("Fallo Atlante consultBillAvVillas: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Consume el endpoint de Atlante para pagar la factura enviada por AvVillas
+     * @param payBillAvVillasRequest Dto con los datos de la factura a pagar
+     * @return Dto con la confirmacion de pago de la factura
+     */
+    @Override
+    public PayBillAvVillasResponse payBillAvVillas(PayBillAvVillasRequest payBillAvVillasRequest) {
+        try {
+            return client.postAbs(URL+"/registerPaymentAvVillas"+TOKEN)
+                    .sendJson(payBillAvVillasRequest)
+                    .onItem().transform(r -> r.bodyAsJson(PayBillAvVillasResponse.class))
+                    .await().indefinitely();
+        } catch (Exception e) {
+            Log.error("Fallo Atlante payBillAvVillas: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

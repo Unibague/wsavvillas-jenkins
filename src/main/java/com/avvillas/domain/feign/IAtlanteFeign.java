@@ -4,6 +4,8 @@ import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
 import com.avvillas.domain.model.ConsultBillAvVillasRequest;
 import com.avvillas.domain.model.ConsultBillAvVillasResponse;
+import com.avvillas.domain.model.PayBillAvVillasRequest;
+import com.avvillas.domain.model.PayBillAvVillasResponse;
 import com.avvillas.domain.model.PmtNotificationRequest;
 import com.avvillas.domain.model.PmtNotificationResponse;
 
@@ -20,7 +22,7 @@ public interface IAtlanteFeign {
     public BillResponse getBill(BillRequest billRequest);
 
     /**
-     * Consume el endpoint de Atlante para pagar facturas solicitada por ATH
+     * Consume el endpoint de Atlante para pagar facturas enviadas por ATH
      * @param pmtNotificationRequest Dto con los datos de las facturas a pagar
      * @return Dto con la confirmacion de pago de las facturas
      */
@@ -32,4 +34,11 @@ public interface IAtlanteFeign {
      * @return Dto con la factura consultada
      */
     public ConsultBillAvVillasResponse consultBillAvVillas(ConsultBillAvVillasRequest billAvVillasRequest);
+
+    /**
+     * Consume el endpoint de Atlante para pagar la factura enviada por AvVillas
+     * @param payBillAvVillasRequest Dto con los datos de la factura a pagar
+     * @return Dto con la confirmacion de pago de la factura
+     */
+    public PayBillAvVillasResponse payBillAvVillas(PayBillAvVillasRequest payBillAvVillasRequest);
 }

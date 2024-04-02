@@ -4,6 +4,8 @@ import com.avvillas.domain.model.BillRequest;
 import com.avvillas.domain.model.BillResponse;
 import com.avvillas.domain.model.ConsultBillAvVillasRequest;
 import com.avvillas.domain.model.ConsultBillAvVillasResponse;
+import com.avvillas.domain.model.PayBillAvVillasRequest;
+import com.avvillas.domain.model.PayBillAvVillasResponse;
 import com.avvillas.domain.model.PmtNotificationRequest;
 import com.avvillas.domain.model.PmtNotificationResponse;
 import com.avvillas.domain.model.TransactionHistory;
@@ -79,6 +81,24 @@ public interface ITransactionHistoryDtoMapper {
     @Mapping(source = "totalValue", target = "paidValue")
     @Mapping(target = "whoSendPetition", constant = "Responde: Unibague")
     TransactionHistory toTransaction(ConsultBillAvVillasResponse consultBillAvVillasResponse);
+
+
+    @Mapping(source = "productNumber", target = "requestId")
+    @Mapping(source = "referenceOne", target = "invoiceId")
+    @Mapping(source = "totalValue", target = "paidValue")
+    @Mapping(source = "transactionDate", target = "requestDate")
+    @Mapping(target = "messageStatus", constant = "Peticion: Pagar factura")
+    @Mapping(target = "whoSendPetition", constant = "Solicita: Banco AV Villas")
+    TransactionHistory toTransaction(PayBillAvVillasRequest payBillAvVillasRequest);
+
+    @Mapping(source = "productNumber", target = "requestId")
+    @Mapping(source = "transactionDate", target = "requestDate")
+    @Mapping(source = "referenceOne", target = "invoiceId")
+    @Mapping(source = "responseCode", target = "numberStatus")
+    @Mapping(source = "responseMessage", target = "messageStatus")
+    @Mapping(target = "whoSendPetition", constant = "Responde: Unibague")
+    TransactionHistory toTransaction(PayBillAvVillasResponse payBillAvVillasResponse);
+
 
     /**
      * Convierte el valor de searchType a su cadena representativa
