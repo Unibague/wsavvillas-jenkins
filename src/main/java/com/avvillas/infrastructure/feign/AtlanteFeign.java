@@ -24,12 +24,12 @@ public class AtlanteFeign implements IAtlanteFeign {
     /**
      * URL global de Atlante
      */
-    private static final String URL = "*";
+    private static final String URL = "http://integra.unibague.edu.co/avVillas";
 
     /**
      * Token para conectarse a Atlante
      */
-    private static final String TOKEN = "*";
+    private static final String TOKEN = "?api_token=$2y$10$s/5xSDieUMEvYD/gfNqFAeFzvWXt13jhWuugpJzQ9rZQrbGpBYUqo";
 
     /**
      * Libreria para realizar peticiones REST
@@ -49,7 +49,7 @@ public class AtlanteFeign implements IAtlanteFeign {
     @Override
     public BillResponse getBill(BillRequest billRequest) {
         try {
-            return client.postAbs(URL+"/transactionStatus"+TOKEN)
+            return client.postAbs(URL+"/transactionStatusATH"+TOKEN)
                     .sendJson(billRequest)
                     .onItem().transform(r -> r.bodyAsJson(BillResponse.class))
                     .await().indefinitely();
@@ -67,7 +67,7 @@ public class AtlanteFeign implements IAtlanteFeign {
     @Override
     public PmtNotificationResponse sendPmtNotification(PmtNotificationRequest pmtNotificationRequest) {
         try {
-            return client.postAbs(URL+"/registerPayment"+TOKEN)
+            return client.postAbs(URL+"/registerPaymentATH"+TOKEN)
                     .sendJson(pmtNotificationRequest)
                     .onItem().transform(r -> r.bodyAsJson(PmtNotificationResponse.class))
                     .await().indefinitely();
@@ -85,7 +85,7 @@ public class AtlanteFeign implements IAtlanteFeign {
     @Override
     public ConsultBillAvVillasResponse consultBillAvVillas(ConsultBillAvVillasRequest billAvVillasRequest) {
         try {
-            return client.postAbs(URL+"/transactionStatusAvVillas"+TOKEN)
+            return client.postAbs(URL+"/transactionStatusAVVILLAS"+TOKEN)
                     .sendJson(billAvVillasRequest)
                     .onItem().transform(r -> r.bodyAsJson(ConsultBillAvVillasResponse.class))
                     .await().indefinitely();

@@ -107,6 +107,7 @@ public class ConsultBillAvVillasService implements IConsultBillAvVillasUseCase {
     /**
      * Guarda un log de la respuesta en base de datos
      * @param response BillResponse a guardar
+     * @param exceptionMessage Mensaje de excepcion en caso de error
      */
     @Override
     public <T> void insertResponseHistory(T response, String exceptionMessage) {

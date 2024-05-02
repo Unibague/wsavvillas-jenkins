@@ -73,9 +73,7 @@ public class PayBillAvVillasService implements IPayBillAvVillasUseCase {
         PayBillAvVillasResponse payBillAvVillasResponseJson = new PayBillAvVillasResponse();
 
         try {
-            //payBillAvVillasResponseJson = atlanteFeign.payBillAvVillas(payBillAvVillasRequest);
-            payBillAvVillasResponseJson.setResponseCode(0);
-            payBillAvVillasResponseJson.setResponseMessage("Transacción exitosa");
+            payBillAvVillasResponseJson = atlanteFeign.payBillAvVillas(payBillAvVillasRequest);
             payBillAvVillasResponseJson = mapperResponse(payBillAvVillasRequest, payBillAvVillasResponseJson);
             insertResponseHistory(payBillAvVillasResponseJson, null);
         } catch (Exception e) {
@@ -88,6 +86,10 @@ public class PayBillAvVillasService implements IPayBillAvVillasUseCase {
         return iPayBillResponseMapper.toPayBillAvVillasResponse(payBillAvVillasResponseJson);
     }
 
+    /**
+     * Guarda un log de la peticion en base de datos
+     * @param request PayBillAvVillasRequest a guardar
+     */
     @Override
     public <T> void insertRequestHistory(T request) {
         PayBillAvVillasRequest payBillAvVillasRequest = (PayBillAvVillasRequest) request;
@@ -98,6 +100,11 @@ public class PayBillAvVillasService implements IPayBillAvVillasUseCase {
         );
     }
 
+    /**
+     * Guarda un log de la respuesta en base de datos
+     * @param response PayBillAvVillasResponse a guardar
+     * @param exceptionMessage Mensaje de excepcion en caso de error
+     */
     @Override
     public <T> void insertResponseHistory(T response, String exceptionMessage) {
         PayBillAvVillasResponse payBillAvVillasResponse = (PayBillAvVillasResponse) response;
@@ -120,7 +127,7 @@ public class PayBillAvVillasService implements IPayBillAvVillasUseCase {
         } else if (transaction.getNumberStatus() == 4) {
             transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()).concat(" (Factura pagada en el pasado"));
         } else if (transaction.getNumberStatus() == 5) {
-            transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()).concat(" (El valor de la factura en el sistema es diferente al enviado"));
+            transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()).concat(" (El valor de la factura en el sistema es diferente al enviado)"));
         }
 
         iTransactionHistoryRepository.insert(transaction).subscribe().with(

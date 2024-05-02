@@ -110,6 +110,7 @@ public class PmtNotificationService implements IPmtNotificationUseCase {
     /**
      * Guarda un log de la respuesta en base de datos
      * @param response PmtNotificationResponse a guardar
+     * @param exceptionMessage Mensaje de excepcion en caso de error
      */
     @Override
     public <T> void insertResponseHistory(T response, String exceptionMessage) {

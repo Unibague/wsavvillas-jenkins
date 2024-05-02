@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Dto de TransactionHistory
+ */
 @Getter
 @Setter
 @AllArgsConstructor
