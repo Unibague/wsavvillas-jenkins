@@ -9,11 +9,9 @@ import jakarta.ws.rs.Path;
 @Path("/restPrueba")
 public class PruebaJson {
 
-    @Inject
-    IBillUseCase iBillUseCase;
 
     @GET()
     public String hello() {
-        return "holi";
+        return "Hola quarkus!";
     }
 }
