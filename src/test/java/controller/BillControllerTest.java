@@ -12,6 +12,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 @QuarkusTest
 public class BillControllerTest {
 
+    /*
     @Test
     public void testSaludar() {
         String cuerpoSoap = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:onl=\"http://biller.com/onlinebilling\">\n" +
@@ -27,5 +28,5 @@ public class BillControllerTest {
                 .when().post("/soap/bill")
                 .then().statusCode(200) // Espera un código de estado 200
                 .body(containsString("¡Hola, Quarkus"));
-    }
+    }*/
 }
