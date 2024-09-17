@@ -2,15 +2,19 @@ package com.avvillas.infrastructure.api.soap;
 
 import com.avvillas.application.dto.PayBillAvVillasRequestXml;
 import com.avvillas.application.dto.PayBillAvVillasResponseXml;
+import com.avvillas.infrastructure.security.WSS4JInterceptorInAvVillas;
+import com.avvillas.infrastructure.security.WSS4JInterceptorOutAvVillas;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 import jakarta.xml.bind.annotation.XmlElement;
+import org.apache.cxf.interceptor.InInterceptors;
+import org.apache.cxf.interceptor.OutInterceptors;
 
 /**
  * Interfaz para el controlador de la notificacion de pago de una factura desde AvVillas
  */
-@WebService(targetNamespace = "http://organizacion.com/wsEstandar/")
+@WebService(targetNamespace = "http://unibague.com/wsEstandar/")
 //@InInterceptors(classes = {WSS4JInterceptorInAvVillas.class})
 //@OutInterceptors(classes = {WSS4JInterceptorOutAvVillas.class})
 public interface IPayBillAvVillasController {

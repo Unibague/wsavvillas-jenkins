@@ -6,9 +6,8 @@ package com.avvillas.domain.model;
 public enum MessagesLog {
 
     SUCCESSFULLY_SAVED("Guardado exitoso Log"),
-    ERROR_SAVED("Error al Guardar Log");
-
-
+    ERROR_SAVED("Error al Guardar Log"),
+    ERROR_DB("Error con la base de datos");
 
     /**
      * Descripcion del mensaje

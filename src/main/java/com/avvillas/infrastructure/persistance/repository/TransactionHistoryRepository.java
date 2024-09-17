@@ -1,9 +1,11 @@
 package com.avvillas.infrastructure.persistance.repository;
 
+import com.avvillas.domain.model.MessagesLog;
 import com.avvillas.domain.model.TransactionHistory;
 import com.avvillas.domain.repository.ITransactionHistoryRepository;
 import com.avvillas.infrastructure.persistance.entity.TransactionHistoryEntity;
 import com.avvillas.infrastructure.persistance.mapper.ITransactionHistoryEntityMapper;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import io.vertx.mutiny.pgclient.PgPool;
@@ -12,6 +14,7 @@ import io.vertx.mutiny.sqlclient.Tuple;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,14 +47,19 @@ public class TransactionHistoryRepository implements ITransactionHistoryReposito
      */
     @Override
     public TransactionHistory findById(Long id) {
-        return iTransactionHistoryEntityMapper.toTransaction(
-                pgClient
-                        .preparedQuery("SELECT * FROM transaction_history WHERE id = $1")
-                        .execute(Tuple.of(id))
-                        .onItem().transform(RowSet::iterator)
-                        .onItem().transform(iterator -> iterator.hasNext() ? TransactionHistoryEntity.from(iterator.next()) : null)
-                        .await().indefinitely()
-        );
+        try {
+            return iTransactionHistoryEntityMapper.toTransaction(
+                    pgClient
+                            .preparedQuery("SELECT * FROM transaction_history WHERE id = $1")
+                            .execute(Tuple.of(id))
+                            .onItem().transform(RowSet::iterator)
+                            .onItem().transform(iterator -> iterator.hasNext() ? TransactionHistoryEntity.from(iterator.next()) : null)
+                            .await().indefinitely()
+            );
+        } catch (Exception e) {
+            Log.error(MessagesLog.ERROR_DB.getDescription().concat("Metodo findById: " + e.getMessage()));
+            return new TransactionHistory();
+        }
     }
 
     /**
@@ -60,14 +68,19 @@ public class TransactionHistoryRepository implements ITransactionHistoryReposito
      */
     @Override
     public List<TransactionHistory> findAll() {
-        return iTransactionHistoryEntityMapper.toTransactionList(
-                pgClient
-                        .query("SELECT * FROM transaction_history ORDER BY request_date DESC")
-                        .execute()
-                        .onItem().transformToMulti(set -> Multi.createFrom().iterable(set))
-                        .onItem().transform(TransactionHistoryEntity::from)
-                        .collect().asList().await().indefinitely()
-        );
+        try {
+            return iTransactionHistoryEntityMapper.toTransactionList(
+                    pgClient
+                            .query("SELECT * FROM transaction_history ORDER BY request_date DESC")
+                            .execute()
+                            .onItem().transformToMulti(set -> Multi.createFrom().iterable(set))
+                            .onItem().transform(TransactionHistoryEntity::from)
+                            .collect().asList().await().indefinitely()
+            );
+        } catch (Exception e) {
+            Log.error(MessagesLog.ERROR_DB.getDescription().concat("Metodo findAll: " + e.getMessage()));
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -77,12 +90,17 @@ public class TransactionHistoryRepository implements ITransactionHistoryReposito
      */
     @Override
     public Uni<Void> insert(TransactionHistory t) {
-        String query = "INSERT INTO transaction_history (request_id, search_type, invoice_id, invoice_card, paid_value, number_status, message_status, request_date, who_send_petition, str_web_service, exception) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
-        Tuple tupleElements =
-                Tuple.tuple(Arrays.asList(t.getRequestId(), t.getSearchType(), t.getInvoiceId(), t.getInvoiceCard(),
-                        t.getPaidValue(), t.getNumberStatus(), t.getMessageStatus(), t.getRequestDate(),
-                        t.getWhoSendPetition(), "AV Villas", t.getException()));
+        try {
+            String query = "INSERT INTO transaction_history (request_id, search_type, invoice_id, invoice_card, paid_value, number_status, message_status, request_date, who_send_petition, str_web_service, exception) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
+            Tuple tupleElements =
+                    Tuple.tuple(Arrays.asList(t.getRequestId(), t.getSearchType(), t.getInvoiceId(), t.getInvoiceCard(),
+                            t.getPaidValue(), t.getNumberStatus(), t.getMessageStatus(), t.getRequestDate(),
+                            t.getWhoSendPetition(), "AV Villas", t.getException()));
 
-        return Uni.combine().all().unis(pgClient.preparedQuery(query).execute(tupleElements)).discardItems();
+            return Uni.combine().all().unis(pgClient.preparedQuery(query).execute(tupleElements)).discardItems();
+        } catch (Exception e) {
+            Log.error(MessagesLog.ERROR_DB.getDescription().concat("Metodo insert: " + e.getMessage()));
+            return Uni.createFrom().voidItem();
+        }
     }
 }
