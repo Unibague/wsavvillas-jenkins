@@ -87,7 +87,12 @@ public class AtlanteFeign implements IAtlanteFeign {
         try {
             return client.postAbs(URL+"/transactionStatusAVVILLAS"+TOKEN)
                     .sendJson(billAvVillasRequest)
-                    .onItem().transform(r -> r.bodyAsJson(ConsultBillAvVillasResponse.class))
+                    .onItem().transform(r -> {
+                                System.out.println("El JSON que esta llegando es: ");
+                                System.out.println(r.bodyAsString());
+                                return r.bodyAsJson(ConsultBillAvVillasResponse.class);
+                    }
+                    )
                     .await().indefinitely();
         } catch (Exception e) {
             Log.error("Fallo Atlante consultBillAvVillas: " + e.getMessage());
@@ -105,7 +110,11 @@ public class AtlanteFeign implements IAtlanteFeign {
         try {
             return client.postAbs(URL+"/registerPaymentAvVillas"+TOKEN)
                     .sendJson(payBillAvVillasRequest)
-                    .onItem().transform(r -> r.bodyAsJson(PayBillAvVillasResponse.class))
+                    .onItem().transform(r -> {
+                        System.out.println("El JSON que esta llegando es: ");
+                        System.out.println(r.bodyAsString());
+                        return r.bodyAsJson(PayBillAvVillasResponse.class);
+                    })
                     .await().indefinitely();
         } catch (Exception e) {
             Log.error("Fallo Atlante payBillAvVillas: " + e.getMessage());
