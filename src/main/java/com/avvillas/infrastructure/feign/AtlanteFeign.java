@@ -88,8 +88,7 @@ public class AtlanteFeign implements IAtlanteFeign {
             return client.postAbs(URL+"/transactionStatusAVVILLAS"+TOKEN)
                     .sendJson(billAvVillasRequest)
                     .onItem().transform(r -> {
-                                System.out.println("El JSON que esta llegando es: ");
-                                System.out.println(r.bodyAsString());
+                                Log.warn("El JSON que esta llegando de Atlante es: " + r.bodyAsString());
                                 return r.bodyAsJson(ConsultBillAvVillasResponse.class);
                     }
                     )
@@ -108,11 +107,10 @@ public class AtlanteFeign implements IAtlanteFeign {
     @Override
     public PayBillAvVillasResponse payBillAvVillas(PayBillAvVillasRequest payBillAvVillasRequest) {
         try {
-            return client.postAbs(URL+"/registerPaymentAvVillas"+TOKEN)
+            return client.postAbs(URL+"/registerPaymentAVVILLAS"+TOKEN)
                     .sendJson(payBillAvVillasRequest)
                     .onItem().transform(r -> {
-                        System.out.println("El JSON que esta llegando es: ");
-                        System.out.println(r.bodyAsString());
+                        Log.warn("El JSON que esta llegando de Atlante es: " + r.bodyAsString());
                         return r.bodyAsJson(PayBillAvVillasResponse.class);
                     })
                     .await().indefinitely();
