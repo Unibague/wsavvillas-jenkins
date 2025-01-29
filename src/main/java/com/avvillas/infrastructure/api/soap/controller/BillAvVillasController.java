@@ -14,7 +14,8 @@ import jakarta.jws.WebService;
  * Unified controller for consulting and paying bills.
  */
 @WebService(endpointInterface = "com.avvillas.infrastructure.api.soap.IBillAvVillasController",
-        serviceName = "billavvillas")
+        serviceName = "billavvillas",
+        targetNamespace = "http://organizacion.com/wsEstandar/")
 public class BillAvVillasController implements IBillAvVillasController {
 
     private final IConsultBillAvVillasUseCase consultUseCase;

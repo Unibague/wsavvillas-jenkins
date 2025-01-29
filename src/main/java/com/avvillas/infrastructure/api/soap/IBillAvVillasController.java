@@ -12,7 +12,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 /**
  * Unified interface for handling both consulting and paying bills
  */
-@WebService(targetNamespace = "http://unibague.com/wsEstandar/")
+@WebService(targetNamespace = "http://organizacion.com/wsEstandar/")
 public interface IBillAvVillasController {
 
     /**
