@@ -24,75 +24,75 @@ public class ConsultBillAvVillasRequestXml {
      * Codigo del banco que realiza la transaccion.
      * AvVillas siempre es 1052
      */
-    @XmlElement(name = "codBancoOrigen", required = true, namespace = "")
+    @XmlElement(name = "codBancoOrigen", required = true)
     private Integer bankCodeOrigin;
 
     /**
      * Codigo que indica el canal por el cual se realiza la transaccion
      */
-    @XmlElement(name = "codCanal", namespace = "")
+    @XmlElement(name = "codCanal")
     private String channelCode;
 
     /**
      * Numero de cuenta con la que se realiza la transaccion
      */
-    @XmlElement(name = "nroProducto", namespace = "")
+    @XmlElement(name = "nroProducto")
     private String productNumber;
 
     /**
      * Codigo de la oficina en la cual se realiza la transaccion.
      */
-    @XmlElement(name = "codOficinaOrigen", namespace = "")
+    @XmlElement(name = "codOficinaOrigen")
     private Integer officeCodeOrigin;
 
     /**
      * Codigo de la ciudad desde la que se realiza la transaccion
      */
-    @XmlElement(name = "codCiudad", namespace = "")
+    @XmlElement(name = "codCiudad")
     private String cityCode;
 
     /**
      * Fecha en la cual se realiza la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    @XmlElement(name = "fechaTransaccion", required = true, namespace = "")
+    @XmlElement(name = "fechaTransaccion", required = true)
     private String transactionDate;
 
     /**
      * Hora en la cual se realiza la transaccion.
      * En formato HHMMSS 130452
      */
-    @XmlElement(name = "horaTransaccion", namespace = "")
+    @XmlElement(name = "horaTransaccion")
     private String transactionHour;
 
     /**
      * Fecha en la cual se hará efectiva la transacción.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    @XmlElement(name = "fechaCompensacion", namespace = "")
+    @XmlElement(name = "fechaCompensacion")
     private String compensationDate;
 
     /**
      * Primera referencia que identifica la factura con la que se está realizando la transaccion.
      */
-    @XmlElement(name = "referencia1", required = true, namespace = "")
+    @XmlElement(name = "referencia1", required = true)
     private String referenceOne;
 
     /**
      * Segunda referencia que identifica la factura con la que se está realizando la transaccion.
      */
-    @XmlElement(name = "referencia2", namespace = "")
+    @XmlElement(name = "referencia2")
     private String referenceTwo;
 
     /**
      * Tercera referencia que identifica la factura con la que se está realizando la transaccion.
      */
-    @XmlElement(name = "referencia3", namespace = "")
+    @XmlElement(name = "referencia3")
     private String referenceThree;
 
     /**
      * Cuarta referencia que identifica la factura con la que se está realizando la transaccion.
      */
-    @XmlElement(name = "referencia4", namespace = "")
+    @XmlElement(name = "referencia4")
     private String referenceFour;
 }
