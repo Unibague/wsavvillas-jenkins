@@ -14,7 +14,7 @@ import org.apache.cxf.interceptor.OutInterceptors;
 /**
  * Interfaz para el controlador de la notificacion de pago de una factura desde AvVillas
  */
-@WebService(targetNamespace = "http://unibague.com/wsEstandar/")
+@WebService(targetNamespace = "http://organizacion.com/wsEstandar/")
 //@InInterceptors(classes = {WSS4JInterceptorInAvVillas.class})
 //@OutInterceptors(classes = {WSS4JInterceptorOutAvVillas.class})
 public interface IPayBillAvVillasController {
