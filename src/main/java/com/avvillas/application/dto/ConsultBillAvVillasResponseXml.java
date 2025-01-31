@@ -24,52 +24,52 @@ public class ConsultBillAvVillasResponseXml {
      * Codigo del banco que realiza la transaccion.
      * AvVillas siempre es 1052
      */
-    @XmlElement(name = "codBancoOrigen", namespace = "")
+    @XmlElement(name = "codBancoOrigen")
     private Integer bankCodeOrigin;
 
     /**
      * Codigo que indica el canal por el cual se realiza la transaccion
      */
-    @XmlElement(name = "codCanal", namespace = "")
+    @XmlElement(name = "codCanal")
     private String channelCode;
 
     /**
      * Numero de cuenta con la que se realiza la transaccion
      */
-    @XmlElement(name = "nroProducto", namespace = "")
+    @XmlElement(name = "nroProducto")
     private String productNumber;
 
     /**
      * Codigo de la oficina en la cual se realiza la transaccion.
      */
-    @XmlElement(name = "codOficinaOrigen", namespace = "")
+    @XmlElement(name = "codOficinaOrigen")
     private Integer officeCodeOrigin;
 
     /**
      * Codigo de la ciudad desde la que se realiza la transaccion
      */
-    @XmlElement(name = "codCiudad", namespace = "")
+    @XmlElement(name = "codCiudad")
     private String cityCode;
 
     /**
      * Fecha en la cual se realiza la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    @XmlElement(name = "fechaTransaccion", namespace = "")
+    @XmlElement(name = "fechaTransaccion")
     private String transactionDate;
 
     /**
      * Hora en la cual se realiza la transaccion.
      * En formato HHMMSS 130452
      */
-    @XmlElement(name = "horaTransaccion", namespace = "")
+    @XmlElement(name = "horaTransaccion")
     private String transactionHour;
 
     /**
      * Fecha en la cual se hará efectiva la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    @XmlElement(name = "fechaCompensacion", namespace = "")
+    @XmlElement(name = "fechaCompensacion")
     private String compensationDate;
 
     /**
@@ -80,7 +80,7 @@ public class ConsultBillAvVillasResponseXml {
      * 3: Factura vencida
      * 99: Error en el sistema
      */
-    @XmlElement(name = "codRespuesta", namespace = "")
+    @XmlElement(name = "codRespuesta")
     private Integer responseCode;
 
     /**
@@ -91,19 +91,19 @@ public class ConsultBillAvVillasResponseXml {
      * 3: Factura vencida
      * 99: Error en el sistema
      */
-    @XmlElement(name = "mensajeRespuesta", namespace = "")
+    @XmlElement(name = "mensajeRespuesta")
     private String responseMessage;
 
     /**
      * Valor total de la factura.
      */
-    @XmlElement(name = "valorTotal", namespace = "")
+    @XmlElement(name = "valorTotal")
     private String totalValue;
 
     /**
      * Fecha en la cual la factura expira.
      * En formato YYYYMMDD ejemplo 20110526.
      */
-    @XmlElement(name = "fechaVencimiento", namespace = "")
+    @XmlElement(name = "fechaVencimiento")
     private String expirationDate;
 }
