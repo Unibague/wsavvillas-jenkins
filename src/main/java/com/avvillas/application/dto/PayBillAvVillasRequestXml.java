@@ -43,7 +43,7 @@ public class PayBillAvVillasRequestXml {
      * Codigo de la oficina en la cual se realiza la transaccion.
      */
     @XmlElement(name = "codOficinaOrigen", namespace = "")
-    private Integer officeCodeOrigin;
+    private String officeCodeOrigin;
 
     /**
      * Codigo de la ciudad desde la que se realiza la transaccion

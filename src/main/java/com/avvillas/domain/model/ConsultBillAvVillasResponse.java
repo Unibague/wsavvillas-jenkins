@@ -36,7 +36,7 @@ public class ConsultBillAvVillasResponse {
     /**
      * Codigo de la oficina en la cual se realiza la transaccion.
      */
-    private Integer officeCodeOrigin;
+    private String officeCodeOrigin;
 
     /**
      * Codigo de la ciudad desde la que se realiza la transaccion
