@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+    xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://organizacion.com/wsEstandar/" 
+    name="wsEstandar">
+
+    <types>
+        <xsd:schema 
+            targetNamespace="http://organizacion.com/wsEstandar/" 
+            xmlns="http://organizacion.com/wsEstandar/" 
+            elementFormDefault="qualified">
+            
+            <!-- CONSULTA -->
+            <xsd:element name="oe_consultarFacturaEstandar">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codBancoOrigen" type="xsd:string"/>
+                        <xsd:element name="codCanal" type="xsd:string"/>
+                        <xsd:element name="nroProducto" type="xsd:string"/>
+                        <xsd:element name="codOficinaOrigen" type="xsd:string"/>
+                        <xsd:element name="codCiudad" type="xsd:string"/>
+                        <xsd:element name="fechaTransaccion" type="xsd:string"/>
+                        <xsd:element name="horaTransaccion" type="xsd:string"/>
+                        <xsd:element name="fechaCompensacion" type="xsd:string"/>
+                        <xsd:element name="referencia1" type="xsd:string"/>
+                        <xsd:element name="referencia2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="referencia3" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="referencia4" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="os_consultarFacturaEstandarResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codBancoOrigen" type="xsd:string"/>
+                        <xsd:element name="codCanal" type="xsd:string"/>
+                        <xsd:element name="nroProducto" type="xsd:string"/>
+                        <xsd:element name="codOficinaOrigen" type="xsd:string"/>
+                        <xsd:element name="codCiudad" type="xsd:string"/>
+                        <xsd:element name="fechaTransaccion" type="xsd:string"/>
+                        <xsd:element name="horaTransaccion" type="xsd:string"/>
+                        <xsd:element name="fechaCompensacion" type="xsd:string"/>
+                        <xsd:element name="codRespuesta" type="xsd:string"/>
+                        <xsd:element name="mensajeRespuesta" type="xsd:string"/>
+                        <xsd:element name="valorTotal" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="fechaVencimiento" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- PAGO -->
+            <xsd:element name="oe_pagarFacturaEstandar">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codBancoOrigen" type="xsd:string"/>
+                        <xsd:element name="codCanal" type="xsd:string"/>
+                        <xsd:element name="nroProducto" type="xsd:string"/>
+                        <xsd:element name="codOficinaOrigen" type="xsd:string"/>
+                        <xsd:element name="codCiudad" type="xsd:string"/>
+                        <xsd:element name="fechaTransaccion" type="xsd:string"/>
+                        <xsd:element name="horaTransaccion" type="xsd:string"/>
+                        <xsd:element name="fechaCompensacion" type="xsd:string"/>
+                        <xsd:element name="referencia1" type="xsd:string"/>
+                        <xsd:element name="referencia2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="referencia3" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="referencia4" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="valorPagado" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="os_pagarFacturaEstandarResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codBancoOrigen" type="xsd:string"/>
+                        <xsd:element name="codCanal" type="xsd:string"/>
+                        <xsd:element name="nroProducto" type="xsd:string"/>
+                        <xsd:element name="codOficinaOrigen" type="xsd:string"/>
+                        <xsd:element name="codCiudad" type="xsd:string"/>
+                        <xsd:element name="fechaTransaccion" type="xsd:string"/>
+                        <xsd:element name="horaTransaccion" type="xsd:string"/>
+                        <xsd:element name="fechaCompensacion" type="xsd:string"/>
+                        <xsd:element name="codRespuesta" type="xsd:string"/>
+                        <xsd:element name="mensajeRespuesta" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <message name="consultarFacturaEstandarRequest">
+        <part name="parameters" element="oe_consultarFacturaEstandar"/>
+    </message>
+    <message name="consultarFacturaEstandarResponse">
+        <part name="parameters" element="os_consultarFacturaEstandarResponse"/>
+    </message>
+    <message name="pagarFacturaEstandarRequest">
+        <part name="parameters" element="oe_pagarFacturaEstandar"/>
+    </message>
+    <message name="pagarFacturaEstandarResponse">
+        <part name="parameters" element="os_pagarFacturaEstandarResponse"/>
+    </message>
+
+    <portType name="wsEstandar">
+        <operation name="consultarFacturaEstandar">
+            <input message="consultarFacturaEstandarRequest"/>
+            <output message="consultarFacturaEstandarResponse"/>
+        </operation>
+        <operation name="pagarFacturaEstandar">
+            <input message="pagarFacturaEstandarRequest"/>
+            <output message="pagarFacturaEstandarResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="wsEstandarSOAP" type="wsEstandar">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="consultarFacturaEstandar">
+            <soap:operation soapAction="http://organizacion.com/wsEstandar/consultarFacturaEstandar"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="pagarFacturaEstandar">
+            <soap:operation soapAction="http://organizacion.com/wsEstandar/pagarFacturaEstandar"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <service name="wsEstandar">
+        <port name="wsEstandarSOAP" binding="wsEstandarSOAP">
+            <soap:address location="http://localhost:8090/soap/wsEstandar"/>
+        </port>
+    </service>
+</definitions>
