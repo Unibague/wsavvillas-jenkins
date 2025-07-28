@@ -16,45 +16,26 @@ import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
-/**
- * Servicio para la consulta de una factura desde AvVillas
- */
 @ApplicationScoped
 public class ConsultBillAvVillasService implements IConsultBillAvVillasUseCase {
 
-    /**
-     * API de Atlante
-     */
     private final IAtlanteFeign atlanteFeign;
-
-    /**
-     * Mapper para ConsultBillRequest
-     */
     private final IConsultBillRequestMapper iConsultBillRequestMapper;
-
-    /**
-     * Mapper para ConsultBillResponse
-     */
     private final IConsultBillResponseMapper iConsultBillResponseMapper;
-
-    /**
-     * Mapper para las TransactionHistory
-     */
     private final ITransactionHistoryDtoMapper iTransactionHistoryDtoMapper;
-
-    /**
-     * Repositorio para las TransactionHistory
-     */
     private final ITransactionHistoryRepository iTransactionHistoryRepository;
 
-
     @Inject
-    public ConsultBillAvVillasService(IAtlanteFeign atlanteFeign, IConsultBillRequestMapper iConsultBillRequestMapper, IConsultBillResponseMapper iConsultBillResponseMapper, ITransactionHistoryDtoMapper iTransactionHistoryDtoMapper, ITransactionHistoryRepository iTransactionHistoryRepository) {
+    public ConsultBillAvVillasService(
+        IAtlanteFeign atlanteFeign,
+        IConsultBillRequestMapper iConsultBillRequestMapper,
+        IConsultBillResponseMapper iConsultBillResponseMapper,
+        ITransactionHistoryDtoMapper iTransactionHistoryDtoMapper,
+        ITransactionHistoryRepository iTransactionHistoryRepository
+    ) {
         this.atlanteFeign = atlanteFeign;
         this.iConsultBillRequestMapper = iConsultBillRequestMapper;
         this.iConsultBillResponseMapper = iConsultBillResponseMapper;
@@ -62,11 +43,6 @@ public class ConsultBillAvVillasService implements IConsultBillAvVillasUseCase {
         this.iTransactionHistoryRepository = iTransactionHistoryRepository;
     }
 
-    /**
-     * Devuelve la información de una factura solicitada, guardando los logs de la transaccion
-     * @param consultBillRequestXml XML con los datos de la factura a consultar
-     * @return XML con la factura consultada
-     */
     @Override
     public ConsultBillAvVillasResponseXml consultBill(ConsultBillAvVillasRequestXml consultBillRequestXml) {
         ConsultBillAvVillasRequest billAvVillasRequest = iConsultBillRequestMapper.toConsultBillAvVillasRequest(consultBillRequestXml);
@@ -78,7 +54,6 @@ public class ConsultBillAvVillasService implements IConsultBillAvVillasUseCase {
 
         try {
             billAvVillasResponseJson = atlanteFeign.consultBillAvVillas(billAvVillasRequest);
-
             billAvVillasResponseJson = mapperResponse(billAvVillasRequest, billAvVillasResponseJson);
             insertResponseHistory(billAvVillasResponseJson, null);
         } catch (Exception e) {
@@ -87,40 +62,31 @@ public class ConsultBillAvVillasService implements IConsultBillAvVillasUseCase {
             billAvVillasResponseJson.setResponseMessage("Error en el sistema");
             insertResponseHistory(billAvVillasResponseJson, e.getMessage());
         }
+
         return iConsultBillResponseMapper.toConsultBillAvVillasResponseXml(billAvVillasResponseJson);
     }
 
-    /**
-     * Guarda un log de la peticion en base de datos
-     * @param request ConsultBillAvVillasRequest a guardar
-     */
     @Override
     public <T> void insertRequestHistory(T request) {
         ConsultBillAvVillasRequest consultRequest = (ConsultBillAvVillasRequest) request;
         TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(consultRequest);
         iTransactionHistoryRepository.insert(transaction).subscribe().with(
-                result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" ConsultBillAvVillasRequestHistory")),
-                failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" ConsultBillAvVillasRequestHistory: " + failure.getMessage()))
+            result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" ConsultBillAvVillasRequestHistory")),
+            failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" ConsultBillAvVillasRequestHistory: " + failure.getMessage()))
         );
     }
 
-    /**
-     * Guarda un log de la respuesta en base de datos
-     * @param response BillResponse a guardar
-     * @param exceptionMessage Mensaje de excepcion en caso de error
-     */
     @Override
     public <T> void insertResponseHistory(T response, String exceptionMessage) {
         ConsultBillAvVillasResponse consultResponse = (ConsultBillAvVillasResponse) response;
         TransactionHistory transaction = iTransactionHistoryDtoMapper.toTransaction(consultResponse);
 
-
         if (exceptionMessage != null) {
             transaction.setException(exceptionMessage);
             transaction.setMessageStatus("Error: ".concat(transaction.getMessageStatus()));
             iTransactionHistoryRepository.insert(transaction).subscribe().with(
-                    result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" excepcion ConsultBillAvVillasResponseHistory")),
-                    failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" excepcion ConsultBillAvVillasResponseHistory: " + failure.getMessage()))
+                result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" excepcion ConsultBillAvVillasResponseHistory")),
+                failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" excepcion ConsultBillAvVillasResponseHistory: " + failure.getMessage()))
             );
             return;
         }
@@ -132,28 +98,38 @@ public class ConsultBillAvVillasService implements IConsultBillAvVillasUseCase {
         }
 
         iTransactionHistoryRepository.insert(transaction).subscribe().with(
-                result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" ConsultBillAvVillasResponseHistory")),
-                failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" ConsultBillAvVillasResponseHistory: " + failure.getMessage()))
+            result -> Log.info(MessagesLog.SUCCESSFULLY_SAVED.getDescription().concat(" ConsultBillAvVillasResponseHistory")),
+            failure -> Log.error(MessagesLog.ERROR_SAVED.getDescription().concat(" ConsultBillAvVillasResponseHistory: " + failure.getMessage()))
         );
-
     }
 
-    /**
-     * Mappea los atributos homonimos de request y response ConsultBill
-     * @param billAvVillasRequest Request source donde estan los datos
-     * @param billAvVillasResponse Response target donde van los datos
-     * @return Response con los atributos mappeados
-     */
-    private ConsultBillAvVillasResponse mapperResponse(ConsultBillAvVillasRequest billAvVillasRequest, ConsultBillAvVillasResponse billAvVillasResponse) {
+    private ConsultBillAvVillasResponse mapperResponse(
+        ConsultBillAvVillasRequest billAvVillasRequest,
+        ConsultBillAvVillasResponse billAvVillasResponse
+    ) {
         billAvVillasResponse.setBankCodeOrigin(billAvVillasRequest.getBankCodeOrigin());
         billAvVillasResponse.setChannelCode(billAvVillasRequest.getChannelCode());
         billAvVillasResponse.setProductNumber(billAvVillasRequest.getProductNumber());
-        billAvVillasResponse.setOfficeCodeOrigin(billAvVillasRequest.getOfficeCodeOrigin());
+
+        // ✅ Formato de 3 dígitos para codOficinaOrigen
+        String formattedOfficeCode = formatToThreeDigits(billAvVillasRequest.getOfficeCodeOrigin());
+        billAvVillasResponse.setOfficeCodeOrigin(formattedOfficeCode);
+
         billAvVillasResponse.setCityCode(billAvVillasRequest.getCityCode());
         billAvVillasResponse.setTransactionDate(LocalDateTime.now());
         billAvVillasResponse.setTransactionHour(LocalTime.now());
         billAvVillasResponse.setCompensationDate(LocalDateTime.now());
         billAvVillasResponse.setReferenceOne(billAvVillasRequest.getReferenceOne());
+
         return billAvVillasResponse;
+    }
+
+    private String formatToThreeDigits(String value) {
+        if (value == null || value.trim().isEmpty()) return "000";
+        try {
+            return String.format("%03d", Integer.parseInt(value));
+        } catch (NumberFormatException e) {
+            return "000";
+        }
     }
 }
