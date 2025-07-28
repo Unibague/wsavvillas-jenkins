@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "os_pagarFacturaEstandar")
+@XmlRootElement(name = "os_pagarFacturaEstandar" , namespace = "http://organizacion.com/wsEstandar/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PayBillAvVillasResponseXml {
 
@@ -24,52 +24,52 @@ public class PayBillAvVillasResponseXml {
      * Codigo del banco que realiza la transaccion.
      * AvVillas siempre es 1052
      */
-    @XmlElement(name = "codBancoOrigen", required = true, namespace = "")
+    @XmlElement(name = "codBancoOrigen", required = true)
     private Integer bankCodeOrigin;
 
     /**
      * Codigo que indica el canal por el cual se realiza la transaccion
      */
-    @XmlElement(name = "codCanal", namespace = "")
+    @XmlElement(name = "codCanal")
     private String channelCode;
 
     /**
      * Numero de cuenta con la que se realiza la transaccion
      */
-    @XmlElement(name = "nroProducto", namespace = "")
+    @XmlElement(name = "nroProducto")
     private String productNumber;
 
     /**
      * Codigo de la oficina en la cual se realiza la transaccion.
      */
-    @XmlElement(name = "codOficinaOrigen", namespace = "")
+    @XmlElement(name = "codOficinaOrigen")
     private String officeCodeOrigin;
 
     /**
      * Codigo de la ciudad desde la que se realiza la transaccion
      */
-    @XmlElement(name = "codCiudad", namespace = "")
+    @XmlElement(name = "codCiudad")
     private String cityCode;
 
     /**
      * Fecha en la cual se realiza la transaccion.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    @XmlElement(name = "fechaTransaccion", required = true, namespace = "")
+    @XmlElement(name = "fechaTransaccion", required = true)
     private String transactionDate;
 
     /**
      * Hora en la cual se realiza la transaccion.
      * En formato HHMMSS 130452
      */
-    @XmlElement(name = "horaTransaccion", namespace = "")
+    @XmlElement(name = "horaTransaccion")
     private String transactionHour;
 
     /**
      * Fecha en la cual se hará efectiva la transacción.
      * En formato YYYYMMDD ejemplo 20110526
      */
-    @XmlElement(name = "fechaCompensacion", namespace = "")
+    @XmlElement(name = "fechaCompensacion")
     private String compensationDate;
 
     /**
@@ -82,7 +82,7 @@ public class PayBillAvVillasResponseXml {
      * 5: El valor no corresponde
      * 99: Error en el sistema
      */
-    @XmlElement(name = "codRespuesta", namespace = "")
+    @XmlElement(name = "codRespuesta")
     private Integer responseCode;
 
     /**
@@ -95,12 +95,12 @@ public class PayBillAvVillasResponseXml {
      * 5: El valor no corresponde
      * 99: Error en el sistema
      */
-    @XmlElement(name = "mensajeRespuesta", namespace = "")
+    @XmlElement(name = "mensajeRespuesta")
     private String responseMessage;
 
     /**
      * Este campo se reporta en Cero
      */
-    @XmlElement(name = "nroAutorizacionRecaudo", namespace = "")
+    @XmlElement(name = "nroAutorizacionRecaudo")
     private Integer authorizationNumber;
 }

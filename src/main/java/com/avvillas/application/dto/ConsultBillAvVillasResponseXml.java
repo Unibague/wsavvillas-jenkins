@@ -16,94 +16,31 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "os_consultarFacturaEstandar")
+@XmlRootElement(name = "os_consultarFacturaEstandarResponse", namespace = "http://organizacion.com/wsEstandar/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ConsultBillAvVillasResponseXml {
-
-    /**
-     * Codigo del banco que realiza la transaccion.
-     * AvVillas siempre es 1052
-     */
     @XmlElement(name = "codBancoOrigen")
     private Integer bankCodeOrigin;
-
-    /**
-     * Codigo que indica el canal por el cual se realiza la transaccion
-     */
     @XmlElement(name = "codCanal")
     private String channelCode;
-
-    /**
-     * Numero de cuenta con la que se realiza la transaccion
-     */
     @XmlElement(name = "nroProducto")
     private String productNumber;
-
-    /**
-     * Codigo de la oficina en la cual se realiza la transaccion.
-     */
     @XmlElement(name = "codOficinaOrigen")
     private String officeCodeOrigin;
-
-    /**
-     * Codigo de la ciudad desde la que se realiza la transaccion
-     */
     @XmlElement(name = "codCiudad")
     private String cityCode;
-
-    /**
-     * Fecha en la cual se realiza la transaccion.
-     * En formato YYYYMMDD ejemplo 20110526
-     */
     @XmlElement(name = "fechaTransaccion")
     private String transactionDate;
-
-    /**
-     * Hora en la cual se realiza la transaccion.
-     * En formato HHMMSS 130452
-     */
     @XmlElement(name = "horaTransaccion")
     private String transactionHour;
-
-    /**
-     * Fecha en la cual se hará efectiva la transaccion.
-     * En formato YYYYMMDD ejemplo 20110526
-     */
     @XmlElement(name = "fechaCompensacion")
     private String compensationDate;
-
-    /**
-     * Codigo de respuesta
-     * 0: Transaccion exitosa
-     * 1: Formato referencia invalido
-     * 2: Factura no existe
-     * 3: Factura vencida
-     * 99: Error en el sistema
-     */
     @XmlElement(name = "codRespuesta")
     private Integer responseCode;
-
-    /**
-     * Mensaje de respuesta
-     * 0: Transaccion exitosa
-     * 1: Formato referencia invalido
-     * 2: Factura no existe
-     * 3: Factura vencida
-     * 99: Error en el sistema
-     */
     @XmlElement(name = "mensajeRespuesta")
     private String responseMessage;
-
-    /**
-     * Valor total de la factura.
-     */
     @XmlElement(name = "valorTotal")
     private String totalValue;
-
-    /**
-     * Fecha en la cual la factura expira.
-     * En formato YYYYMMDD ejemplo 20110526.
-     */
     @XmlElement(name = "fechaVencimiento")
     private String expirationDate;
 }

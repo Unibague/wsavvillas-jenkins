@@ -8,7 +8,7 @@ import org.apache.cxf.jaxws.EndpointImpl;
 
 import jakarta.xml.ws.Endpoint;
 
-import com.avvillas.infrastructure.config.RemoveNamespacePrefixDomInterceptor;
+import com.avvillas.infrastructure.config.RemoveNamespacePrefixInterceptor;
 import com.avvillas.infrastructure.api.soap.controller.BillAvVillasController;
 import com.avvillas.domain.usecase.IConsultBillAvVillasUseCase;
 import com.avvillas.domain.usecase.IPayBillAvVillasUseCase;
@@ -29,14 +29,15 @@ public class CXFConfig {
     @Inject
     IPayBillAvVillasUseCase payUseCase;
 
-    @Produces
-    public Endpoint endpointBillAvVillas() {
-        BillAvVillasController controller = new BillAvVillasController(consultUseCase, payUseCase);
-        EndpointImpl endpoint = new EndpointImpl(bus, controller);
-        endpoint.publish("/wsEstandar");
-        endpoint.getOutInterceptors().add(new RemoveNamespacePrefixDomInterceptor());
-        endpoint.getProperties().put("jaxb.namespacePrefixMapper", new NoPrefixNamespaceMapper());
+   @Produces
+public Endpoint endpointBillAvVillas() {
+    BillAvVillasController controller = new BillAvVillasController(consultUseCase, payUseCase);
+    EndpointImpl endpoint = new EndpointImpl(bus, controller);
+    endpoint.publish("/wsEstandar");
+    endpoint.getProperties().put("jaxb.namespacePrefixMapper", new NoPrefixNamespaceMapper());
+    endpoint.getOutInterceptors().add(new RemoveNamespacePrefixInterceptor()); // donde usas FilteredOutputStream
 
-        return endpoint;
-    }
+    return endpoint;
+}
+
 }
