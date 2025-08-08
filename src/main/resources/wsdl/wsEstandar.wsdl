@@ -32,7 +32,7 @@
                 </xsd:complexType>
             </xsd:element>
 
-            <xsd:element name="os_consultarFacturaEstandarResponse">
+            <xsd:element name="os_consultarFacturaEstandar">
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element name="codBancoOrigen" type="xsd:string"/>
@@ -94,8 +94,8 @@
     <message name="consultarFacturaEstandarRequest">
         <part name="parameters" element="oe_consultarFacturaEstandar"/>
     </message>
-    <message name="consultarFacturaEstandarResponse">
-        <part name="parameters" element="os_consultarFacturaEstandarResponse"/>
+    <message name="consultarFacturaEstandar">
+        <part name="parameters" element="os_consultarFacturaEstandar"/>
     </message>
     <message name="pagarFacturaEstandarRequest">
         <part name="parameters" element="oe_pagarFacturaEstandar"/>
@@ -107,7 +107,7 @@
     <portType name="wsEstandar">
         <operation name="consultarFacturaEstandar">
             <input message="consultarFacturaEstandarRequest"/>
-            <output message="consultarFacturaEstandarResponse"/>
+            <output message="consultarFacturaEstandar"/>
         </operation>
         <operation name="pagarFacturaEstandar">
             <input message="pagarFacturaEstandarRequest"/>

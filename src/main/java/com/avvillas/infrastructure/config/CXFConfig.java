@@ -53,6 +53,7 @@ public class CXFConfig {
         endpoint.getOutInterceptors().add(new AddSoapHeaderInterceptor());
         endpoint.getOutInterceptors().add(new AddHttpHeaderInterceptor());
         endpoint.getOutInterceptors().add(new SoapLoggingInterceptor());
+        endpoint.getOutInterceptors().add(new CleanSoapResponseInterceptor());
 
         // Eliminación de prefijos XML
         endpoint.getProperties().put("jaxb.namespacePrefixMapper", new NoPrefixNamespaceMapper());

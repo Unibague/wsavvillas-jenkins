@@ -29,11 +29,11 @@ public void close() throws IOException {
     System.out.println("⏳[SOAP ORIGINAL XML] =======================");
     System.out.println(xml);
 
-    xml = xml.replaceFirst("<(ns\\d+):os_consultarFacturaEstandarResponse", "<os:os_consultarFacturaEstandarResponse");
-    xml = xml.replaceFirst("</(ns\\d+):os_consultarFacturaEstandarResponse", "</os:os_consultarFacturaEstandarResponse");
+    xml = xml.replaceFirst("<(ns\\d+):os_consultarFacturaEstandar", "<os:os_consultarFacturaEstandar");
+    xml = xml.replaceFirst("</(ns\\d+):os_consultarFacturaEstandar", "</os:os_consultarFacturaEstandar");
 
     if (!xml.contains("xmlns:os=")) {
-        xml = xml.replaceFirst("<os:os_consultarFacturaEstandarResponse", "<os:os_consultarFacturaEstandarResponse xmlns:os=\"http://organizacion.com/wsEstandar/\"");
+        xml = xml.replaceFirst("<os:os_consultarFacturaEstandar", "<os:os_consultarFacturaEstandar xmlns:os=\"http://organizacion.com/wsEstandar/\"");
     }
 
     xml = xml.replaceAll("<(/?)ns\\d+:", "<$1");

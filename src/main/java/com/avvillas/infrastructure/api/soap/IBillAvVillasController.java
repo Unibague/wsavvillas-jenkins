@@ -39,7 +39,7 @@ public interface IBillAvVillasController {
             action = "http://organizacion.com/wsEstandar/consultarFacturaEstandar"   // Matches <soap:operation soapAction>
     )
     @WebResult(
-            name = "os_consultarFacturaEstandarResponse",
+            name = "os_consultarFacturaEstandar",
             targetNamespace = "http://organizacion.com/wsEstandar/")
 
     public ConsultBillAvVillasResponseXml consultarFacturaEstandar(
