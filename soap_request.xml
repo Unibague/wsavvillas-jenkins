@@ -1,0 +1,21 @@
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<soapenv:Body>
+<es:oe_consultarFacturaEstandar xmlns:es="http://organizacion.com/wsEstandar/">
+<codBancoOrigen>1052</codBancoOrigen>
+<codCanal>*****</codCanal>
+<nroProducto>401286380</nroProducto>
+<codOficinaOrigen>59</codOficinaOrigen>
+<codCiudad>00000</codCiudad>
+<fechaTransaccion>20250723</fechaTransaccion>
+<horaTransaccion>104339</horaTransaccion>
+<fechaCompensacion>20250723</fechaCompensacion>
+<referencia1>0000000001717189</referencia1>
+<referencia2>0000000000000000</referencia2>
+<referencia3>0</referencia3>
+<referencia4>0</referencia4>
+</es:oe_consultarFacturaEstandar>
+</soapenv:Body>
+</soapenv:Envelope>
+
+
