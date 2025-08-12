@@ -65,9 +65,10 @@ public class CleanSoapResponseInterceptor extends AbstractSoapInterceptor {
             .replaceAll("xmlns:os=\"[^\"]*\"\\s*", "")
             .replaceAll("\\s+>", ">")
             // Agregar xmlns="" a elementos hijos
-            .replaceAll("<(codBancoOrigen|codCanal|nroProducto|codOficinaOrigen|codCiudad|fechaTransaccion|horaTransaccion|fechaCompensacion|codRespuesta|mensajeRespuesta|valorTotal|fechaVencimiento)>", "<$1 xmlns=\"\">")
+            .replaceAll("<(codBancoOrigen|codCanal|nroProducto|codOficinaOrigen|codCiudad|fechaTransaccion|horaTransaccion|fechaCompensacion|codRespuesta|mensajeRespuesta|valorTotal|fechaVencimiento|nroAutorizacionRecaudo)>", "<$1 xmlns=\"\">")
             // Agregar namespace al elemento raíz
-            .replaceAll("<os_consultarFacturaEstandar>", "<os_consultarFacturaEstandar xmlns=\"http://organizacion.com/wsEstandar/\">");
+            .replaceAll("<os_consultarFacturaEstandar>", "<os_consultarFacturaEstandar xmlns=\"http://organizacion.com/wsEstandar/\">")
+            .replaceAll("<os_pagarFacturaEstandar>", "<os_pagarFacturaEstandar xmlns=\"http://organizacion.com/wsEstandar/\">");
 
         originalOs.write(cleanedXml.getBytes("UTF-8"));
         originalOs.flush();

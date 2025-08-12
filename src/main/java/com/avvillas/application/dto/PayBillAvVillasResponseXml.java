@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "os_pagarFacturaEstandar")
+@XmlRootElement(name = "os_pagarFacturaEstandar", namespace = "http://organizacion.com/wsEstandar/")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PayBillAvVillasResponseXml {
 

@@ -38,7 +38,21 @@ public interface IPayBillRequestMapper {
      */
     @Named("stringToDouble")
     default Double stringToDouble(String value) {
-        return Double.parseDouble(value);
+        if (value == null || value.trim().isEmpty()) {
+            return 0.0;
+        }
+        // Convertir formato 000000000000050000 a 500.00
+        String trimmed = value.trim();
+        if (trimmed.matches("\\d{18}")) {
+            // Tomar los dígitos excepto los últimos 2 como parte entera
+            String integerPart = trimmed.substring(0, trimmed.length() - 2);
+            String decimalPart = trimmed.substring(trimmed.length() - 2);
+            // Remover ceros a la izquierda de la parte entera
+            integerPart = integerPart.replaceFirst("^0+", "");
+            if (integerPart.isEmpty()) integerPart = "0";
+            return Double.parseDouble(integerPart + "." + decimalPart);
+        }
+        return Double.parseDouble(trimmed);
     }
 
     /**
