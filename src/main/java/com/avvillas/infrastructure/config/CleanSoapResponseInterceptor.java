@@ -6,17 +6,7 @@ import org.apache.cxf.headers.Header;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.phase.Phase;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -64,13 +54,20 @@ public class CleanSoapResponseInterceptor extends AbstractSoapInterceptor {
 
         String xmlContent = buffer.toString("UTF-8");
         
-        // Limpiar prefijos os: directamente en el string
+        // Agregar namespaces al envelope
         String cleanedXml = xmlContent
+            .replaceAll("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">", 
+                       "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">")
+            // Limpiar prefijos os:
             .replaceAll("<os:", "<")
             .replaceAll("</os:", "</")
             .replaceAll("\\s+xmlns:os=\"[^\"]*\"", "")
             .replaceAll("xmlns:os=\"[^\"]*\"\\s*", "")
-            .replaceAll("\\s+>", ">");
+            .replaceAll("\\s+>", ">")
+            // Agregar xmlns="" a elementos hijos
+            .replaceAll("<(codBancoOrigen|codCanal|nroProducto|codOficinaOrigen|codCiudad|fechaTransaccion|horaTransaccion|fechaCompensacion|codRespuesta|mensajeRespuesta|valorTotal|fechaVencimiento)>", "<$1 xmlns=\"\">")
+            // Agregar namespace al elemento raíz
+            .replaceAll("<os_consultarFacturaEstandar>", "<os_consultarFacturaEstandar xmlns=\"http://organizacion.com/wsEstandar/\">");
 
         originalOs.write(cleanedXml.getBytes("UTF-8"));
         originalOs.flush();
